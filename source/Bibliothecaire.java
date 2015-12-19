@@ -1,9 +1,12 @@
+package BiblioPackage;
+
+import java.util.*;
 
 
 /**
- * Class new_class
+ * Class Bibliothecaire
  */
-public class new_class {
+public class Bibliothecaire extends Personne {
 
   //
   // Fields
@@ -13,7 +16,7 @@ public class new_class {
   //
   // Constructors
   //
-  public new_class () { };
+  public Bibliothecaire () { };
   
   //
   // Methods

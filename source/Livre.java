@@ -1,3 +1,5 @@
+package BiblioPackage;
+
 
 
 /**
@@ -13,7 +15,7 @@ public class Livre extends Ressource {
   //
   // Constructors
   //
-  public Livre () { };
+  public Livre (String aut, String cat, String nation, String ref, String desc, int nb) { };
   
   //
   // Methods

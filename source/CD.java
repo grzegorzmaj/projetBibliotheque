@@ -1,3 +1,5 @@
+package BiblioPackage;
+
 
 
 /**
@@ -13,7 +15,7 @@ public class CD extends Ressource {
   //
   // Constructors
   //
-  public CD () { };
+  public CD (String aut, String cat, String nation, String ref, String desc, int nb) { };
   
   //
   // Methods

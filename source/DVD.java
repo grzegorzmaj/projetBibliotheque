@@ -1,3 +1,5 @@
+package BiblioPackage;
+
 
 
 /**
@@ -13,7 +15,7 @@ public class DVD extends Ressource {
   //
   // Constructors
   //
-  public DVD () { };
+  public DVD (String aut, String cat, String nation, String ref, String desc, int nb) { };
   
   //
   // Methods
