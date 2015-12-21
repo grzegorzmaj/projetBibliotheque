@@ -13,6 +13,7 @@ public class Ressource {
   // Fields
   //
 
+  private String titre;
   private String auteur;
   private String categorie;
   private String nationalite;
@@ -21,13 +22,19 @@ public class Ressource {
   private int nbDisponible;
   private int nbReserve;
   private int nbTotal;
-
-  private Vector emprunteVector = new Vector();
   
   //
   // Constructors
   //
-  public Ressource () { };
+  public Ressource (String t, String aut, String cat, String nation, String ref, String desc, int nb) {
+      this.titre=t;
+      this.auteur=aut;
+      this.categorie=cat;
+      this.nationalite=nation;
+      this.reference=ref;
+      this.description=desc;
+      this.nbTotal=nb;
+  }
   
   //
   // Methods
@@ -37,7 +44,23 @@ public class Ressource {
   //
   // Accessor methods
   //
+  
+  /**
+   * Set the value of auteur
+   * @param newVar the new value of auteur
+   */
+  public void setTitre (String newVar) {
+    this.titre = newVar;
+  }
 
+  /**
+   * Get the value of auteur
+   * @return the value of auteur
+   */
+  public String getTitre () {
+    return this.titre;
+  }
+  
   /**
    * Set the value of auteur
    * @param newVar the new value of auteur

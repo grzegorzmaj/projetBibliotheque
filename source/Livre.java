@@ -15,7 +15,9 @@ public class Livre extends Ressource {
   //
   // Constructors
   //
-  public Livre (String aut, String cat, String nation, String ref, String desc, int nb) { };
+  public Livre (String t, String aut, String cat, String nation, String ref, String desc, int nb) {
+      super(t,aut,cat,nation,ref,desc,nb);
+  }
   
   //
   // Methods

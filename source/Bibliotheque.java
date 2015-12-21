@@ -111,32 +111,53 @@ public class Bibliotheque {
       System.out.println("Veuillez choisir le type : \n 1) Livre \n 2) Revue \n 3) CD \n 4) DVD");
       int type = Lire.choix(4);
       System.out.println("Veuillez entrer :");
+      System.out.print("- titre : ");
+      String t = Lire.S();
       System.out.print("- auteur : ");
       String aut = Lire.S();
-      System.out.print("- categorie : ");
-      String cat = Lire.S();
-      System.out.print("- nation : ");
-      String nation = Lire.S();
-      System.out.print("- ref : ");
-      String ref = Lire.S();
-      System.out.print("- description : ");
-      String desc = Lire.S();
-      System.out.print("- le nombre : ");
-      int nb = Lire.i();
       
-      switch(type){
-          case 1 :
-              this.doc.add(new Livre(aut,cat,nation,ref,desc,nb));
-              break;
-          case 2 :
-              this.doc.add(new Revue(aut,cat,nation,ref,desc,nb));
-              break;
-          case 3 :
-              this.doc.add(new CD(aut,cat,nation,ref,desc,nb));
-              break;
-          case 4 :
-              this.doc.add(new DVD(aut,cat,nation,ref,desc,nb));
-              break;
+      if(this.chercherRessource(t, aut)!=null){// regarde si un autre livre existe deja
+          System.out.println("Un livre du meme titre et auteur existe deja, voulez-vous : \n 1) en ajouter des autres \n 2) annuler");
+          int c = Lire.choix(2);
+          if(c==1){
+            Ressource DocTrouve = this.chercherRessource(t, aut);
+            System.out.print("Veuillez entrer le nombre a rajouter : ");
+            int nb = Lire.i();
+            DocTrouve.setNbTotal(DocTrouve.getNbTotal()+nb);
+          }    
+       }
+      else{
+        System.out.print("- categorie : ");
+        String cat = Lire.S();
+        System.out.print("- nation : ");
+        String nation = Lire.S();
+        System.out.print("- ref : ");
+        String ref = Lire.S();
+        
+        while(this.chercherRessource(ref)!=null){// regarde si la refernce est deja utilise
+          System.out.println("Un livre a deja cet reference veuillez en choir une autre : ");
+          ref = Lire.S();
+        }
+        
+        System.out.print("- description : ");
+        String desc = Lire.S();
+        System.out.print("- le nombre : ");
+        int nb = Lire.i();
+
+        switch(type){
+            case 1 :
+                this.doc.add(new Livre(t,aut,cat,nation,ref,desc,nb));
+                break;
+            case 2 :
+                this.doc.add(new Revue(t,aut,cat,nation,ref,desc,nb));
+                break;
+            case 3 :
+                this.doc.add(new CD(t,aut,cat,nation,ref,desc,nb));
+                break;
+            case 4 :
+                this.doc.add(new DVD(t,aut,cat,nation,ref,desc,nb));
+                break;
+        }
       }
   }
 
@@ -146,12 +167,12 @@ public class Bibliotheque {
   public void supprimerRessource(){
       boolean supprime=false;
       
-      System.out.print("Veuillez entrer la refernce de la ressource a supprimer : ");
+      System.out.print("Veuillez entrer la reference de la ressource a supprimer : ");
       String ref = Lire.S();
       
       for(int i=0; i<this.doc.size();i++){
           if(ref.equals(this.doc.get(i).getReference())){
-              this.adh.remove(i);
+              this.doc.remove(i);
               supprime=true;
           }
       }
@@ -177,15 +198,61 @@ public class Bibliotheque {
   public void afficherRessource()
   {
   }
-
+  
+  /**
+   * @return       Ressource
+   */
+  public Ressource chercherRessource(){//methode pas fini
+      ArrayList<Ressource> resultatBrut = new ArrayList<Ressource>();
+      ArrayList<Ressource> resultat = new ArrayList<Ressource>();
+      ArrayList<String> motCles = new ArrayList<String>();
+      
+      System.out.println("Veuillez entrer les mots cles suivis d'un appui sur a touche entrer. Pour arreter d'entrer les mots cles, ne mettez rien, et appuyez sur entrer.");
+      String m = Lire.S();
+      while (! m.equals("")){
+          motCles.add(m);
+          m=Lire.S();
+      }
+      for(int i=0; i<motCles.size(); i++){
+        m=motCles.get(i);
+        for(int j=0; j<this.doc.size(); j++){
+          Ressource d = this.doc.get(j);
+          if(d.getAuteur().contains(m) || d.getTitre().contains(m) || d.getDescription().contains(m) || d.getReference().contains(m) || d.getCategorie().contains(m) || d.getNationalite().contains(m) ){
+              resultat.add(d);
+          }
+        }
+      }
+      
+      for(int i=0; i<resultat.size(); i++){
+          System.out.println(resultat.get(i).toString());
+      }
+      
+      return null;
+  }
 
   /**
    * @return       Ressource
    */
-  public Ressource chercherRessource(){
+  public Ressource chercherRessource(String titre, String auteur){
+      for(int i=0; i<this.doc.size(); i++){
+          if(this.doc.get(i).getTitre().equals(titre) && this.doc.get(i).getAuteur().equals(auteur)){
+              return this.doc.get(i);
+          }
+      }
       return null;
   }
-
+  
+    /**
+   * @return       Ressource
+   */
+  public Ressource chercherRessource(String reference){
+      for(int i=0; i<this.doc.size(); i++){
+          if(this.doc.get(i).getReference().equals(reference)){
+              return this.doc.get(i);
+          }
+      }
+      return null;
+  }
 
   /**
    * @return       Personne

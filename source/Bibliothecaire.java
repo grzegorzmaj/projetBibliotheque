@@ -16,7 +16,9 @@ public class Bibliothecaire extends Personne {
   //
   // Constructors
   //
-  public Bibliothecaire () { };
+  public Bibliothecaire (String n, String p, String a, String dn, int tel, String am,int num) { 
+    super(n,p,a,dn,tel,am,num);
+  }
   
   //
   // Methods

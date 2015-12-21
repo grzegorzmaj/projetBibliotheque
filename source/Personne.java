@@ -27,7 +27,16 @@ public class Personne {
   //
   // Constructors
   //
-  public Personne () { };
+  public Personne (String n, String p, String a, String dn, int tel, String am,int num) {
+      this.nom=n;
+      this.prenom=p;
+      this.adresse=a;
+      this.dateNaissance=dn;
+      this.telephone=tel;
+      this.mail=am;
+      this.numeroCarte=num;
+      nombre++;
+  }
   
   //
   // Methods
