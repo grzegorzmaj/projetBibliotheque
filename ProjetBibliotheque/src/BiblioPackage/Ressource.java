@@ -193,11 +193,13 @@ public class Ressource {
   // Other methods
   //
 
-  /**
-   * @return       String
-   */
-  public String toString(){
-      return null;
+    @Override
+    public String toString() {
+        return titre + "\n auteur : " + auteur + "\n categorie : " + categorie + "\n nationalite : " + nationalite + "\n reference : " + reference + "\n description : " + description + "\n nbDisponible : " + nbDisponible + "\n nbReserve : " + nbReserve + "\n nbTotal : " + nbTotal;
+    }
+
+  public boolean equals(Ressource r){
+      return this.getReference().equals(r.getReference());
   }
 
 

@@ -202,9 +202,8 @@ public class Bibliotheque {
   /**
    * @return       Ressource
    */
-  public Ressource chercherRessource(){//methode pas fini
-      ArrayList<Ressource> resultatBrut = new ArrayList<Ressource>();
-      ArrayList<Ressource> resultat = new ArrayList<Ressource>();
+  public ArrayList<Resultat> chercherRessourceMotCles(){
+      ArrayList<Resultat> resultats = new ArrayList<Resultat>();
       ArrayList<String> motCles = new ArrayList<String>();
       
       System.out.println("Veuillez entrer les mots cles suivis d'un appui sur a touche entrer. Pour arreter d'entrer les mots cles, ne mettez rien, et appuyez sur entrer.");
@@ -213,21 +212,105 @@ public class Bibliotheque {
           motCles.add(m);
           m=Lire.S();
       }
+      
       for(int i=0; i<motCles.size(); i++){
         m=motCles.get(i);
         for(int j=0; j<this.doc.size(); j++){
           Ressource d = this.doc.get(j);
-          if(d.getAuteur().contains(m) || d.getTitre().contains(m) || d.getDescription().contains(m) || d.getReference().contains(m) || d.getCategorie().contains(m) || d.getNationalite().contains(m) ){
-              resultat.add(d);
+          if(d.getAuteur().contains(m)){
+            this.ajouterResultat(resultats, d);
+          }
+          if(d.getTitre().contains(m)){
+            this.ajouterResultat(resultats, d);
+          }
+          if(d.getDescription().contains(m)){
+            this.ajouterResultat(resultats, d);
+          }
+          if(d.getReference().contains(m)){
+            this.ajouterResultat(resultats, d);
+          }
+          if(d.getCategorie().contains(m)){
+            this.ajouterResultat(resultats, d);
+          }
+          if(d.getNationalite().contains(m)){
+            this.ajouterResultat(resultats, d);
           }
         }
       }
       
-      for(int i=0; i<resultat.size(); i++){
-          System.out.println(resultat.get(i).toString());
+      Collections.sort(resultats);
+      
+      return resultats;
+  }
+
+  public ArrayList<Resultat> chercherRessourceCriteres(){//methode pas fini
+      ArrayList<Resultat> resultats = new ArrayList<Resultat>();
+      
+      System.out.println("Veuillez entrer :");
+      System.out.print("- titre : ");
+      String t = Lire.S();
+      System.out.print("- auteur : ");
+      String aut = Lire.S();
+      System.out.print("- categorie : ");
+      String cat = Lire.S();
+      System.out.print("- nation : ");
+      String nation = Lire.S();
+      System.out.print("- description : ");
+      String desc = Lire.S();
+      
+      for(int j=0; j<this.doc.size(); j++){
+        Ressource d = this.doc.get(j);
+        if(d.getTitre().equals(t) && !t.equals("")){
+            this.ajouterResultat(resultats, d);
+        }
+        if(d.getAuteur().equals(aut) && !aut.equals("")){
+            this.ajouterResultat(resultats, d);
+        }
+        if(d.getCategorie().equals(cat) && !cat.equals("")){
+            this.ajouterResultat(resultats, d);
+        }
+        if(d.getNationalite().equals(nation) && !nation.equals("")){
+            this.ajouterResultat(resultats, d);
+        }
+        if(d.getDescription().contains(desc) && !desc.equals("")){
+            this.ajouterResultat(resultats, d);
+        }
       }
       
-      return null;
+      Collections.sort(resultats);
+      
+      return resultats;
+  }
+  
+  public void ajouterResultat(ArrayList<Resultat> resultats, Ressource d){
+    if(resultats.isEmpty()){
+        resultats.add(new Resultat(d,1));
+    }
+    else{
+        int indiceTemp=-1;
+        for(int k=0; k<resultats.size() ; k++){// verifie si le resultat n'est pas deja dans la liste
+            if(resultats.get(k).getRessource().equals(d)){
+                indiceTemp=k;
+            }
+        }
+        if(indiceTemp>-1){//si c'est le cas il augmente la pertinence
+            resultats.get(indiceTemp).augmentePertinence();
+        }
+        else{//sinon il l'ajoute
+            resultats.add(new Resultat(d,1));
+        }
+    } 
+  }
+  
+  public ArrayList<Resultat> checherRessourceRef(){
+      System.out.print("Veuillez entrer la reference recherche : ");
+      String ref = Lire.S();
+      Ressource r=this.chercherRessource(ref);
+      ArrayList<Resultat> resultat = new ArrayList<Resultat>();
+      if(r!=null){
+        resultat.add(new Resultat(r,1));
+      }
+      return resultat;
   }
 
   /**
