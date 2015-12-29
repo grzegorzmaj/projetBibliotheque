@@ -12,17 +12,20 @@ public class Adherent extends Personne {
   //
   // Fields
   //
-
+ private List<Emprunt> emprunteList;
+ 
   private int nbLivre = 0;
   private int nbCd = 0;
   private int nbRevue = 0;
   private int nbDVD = 0;
+  private int nbReserve = 0;
   
   //
   // Constructors
   //
-  public Adherent (String n, String p, String a, String dn, int tel, String am,int num) {
-      super(n,p,a,dn,tel,am,num);
+  public Adherent (String n, String p, String a, String dn, int tel, String am) {
+      super(n,p,a,dn,tel,am);
+      this.emprunteList = new ArrayList();
   }
   
   //
@@ -98,9 +101,47 @@ public class Adherent extends Personne {
     return nbDVD;
   }
 
+  /**
+   * Set the value of nbReserve
+   * @param newVar the new value of nbReserve
+   */
+  public void setNbReserve (int newVar) {
+    nbReserve = newVar;
+  }
+
+  /**
+   * Get the value of nbReserve
+   * @return the value of nbReserve
+   */
+  public int getNbReserve () {
+    return nbReserve;
+  }
+  
   //
   // Other methods
   //
+/**
+   * Add a Emprunte object to the emprunteVector List
+   */
+  public void addEmprunte (Emprunt obj) {
+    emprunteList.add(obj);
+  }
+
+  /**
+   * Remove a Emprunte object from emprunteVector List
+   */
+  public void removeEmprunte (Emprunt obj)
+  {
+    emprunteList.remove(obj);
+  }
+
+  /**
+   * Get the List of Emprunte objects held by emprunteVector
+   * @return List of Emprunte objects held by emprunteVector
+   */
+  public List getEmprunteList () {
+    return (List) emprunteList;
+  }
 
 
 }

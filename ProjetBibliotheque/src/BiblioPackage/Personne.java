@@ -22,20 +22,19 @@ public class Personne {
   private String mail;
   private int numeroCarte;
 
-  private Vector emprunteVector = new Vector();
+ 
   
   //
   // Constructors
   //
-  public Personne (String n, String p, String a, String dn, int tel, String am,int num) {
+  public Personne (String n, String p, String a, String dn, int tel, String am) {
       this.nom=n;
       this.prenom=p;
       this.adresse=a;
       this.dateNaissance=dn;
       this.telephone=tel;
       this.mail=am;
-      this.numeroCarte=num;
-      nombre++;
+      this.numeroCarte= ++nombre;
   }
   
   //
@@ -167,29 +166,7 @@ public class Personne {
     return numeroCarte;
   }
 
-  /**
-   * Add a Emprunte object to the emprunteVector List
-   */
-  public void addEmprunte (Ressource new_object) {
-    emprunteVector.add(new_object);
-  }
-
-  /**
-   * Remove a Emprunte object from emprunteVector List
-   */
-  public void removeEmprunte (Ressource new_object)
-  {
-    emprunteVector.remove(new_object);
-  }
-
-  /**
-   * Get the List of Emprunte objects held by emprunteVector
-   * @return List of Emprunte objects held by emprunteVector
-   */
-  public List getEmprunteList () {
-    return (List) emprunteVector;
-  }
-
+  
 
   //
   // Other methods
@@ -198,6 +175,7 @@ public class Personne {
   /**
    * @return       String
    */
+  @Override
   public String toString(){
       return null;
   }
