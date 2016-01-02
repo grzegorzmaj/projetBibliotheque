@@ -1,6 +1,15 @@
 package BiblioPackage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * Class Bibliotheque
@@ -57,6 +66,161 @@ public class Bibliotheque {
         return Nom;
     }
 
+    public void debutTravail() {
+
+        JSONParser parser = new JSONParser();
+
+        try {
+            JSONArray a = (JSONArray) parser.parse(new FileReader("adherent.json"));
+
+            for (Object o : a) {
+                JSONObject adherent = (JSONObject) o;
+
+                String nom = (String) adherent.get("nom");
+                System.out.println(nom);
+
+                String prenom = (String) adherent.get("prenom");
+                System.out.println(prenom);
+
+                String adresse = (String) adherent.get("adresse");
+                System.out.println(adresse);
+
+                String dn = (String) adherent.get("dn");
+                System.out.println(dn);
+
+                int tel = (int) adherent.get("tel");
+                System.out.println(tel);
+
+                String mail = (String) adherent.get("mail");
+                System.out.println(mail);
+
+                int num = (int) adherent.get("num");
+                System.out.println(num);
+
+                JSONArray emprunte = (JSONArray) adherent.get("emprunte");
+
+                this.adh.add(new Adherent(nom, prenom, adresse, dn, tel, mail, num));
+                
+                for (Object c : emprunte) {
+                    System.out.println(c + "");
+                    this.adh.get(this.adh.size()).addEmprunte(null);//add sth about emprunte! need to change emprunte type
+                }
+                
+                
+                
+            }
+        } catch (FileNotFoundException e) {
+        } catch (IOException | ParseException e) {
+        }
+
+        try {
+            JSONArray a = (JSONArray) parser.parse(new FileReader("bibliothecaire.json"));
+
+            for (Object o : a) {
+                JSONObject adherent = (JSONObject) o;
+
+                String nom = (String) adherent.get("nom");
+                System.out.println(nom);
+
+                String prenom = (String) adherent.get("prenom");
+                System.out.println(prenom);
+
+                String adresse = (String) adherent.get("adresse");
+                System.out.println(adresse);
+
+                String dn = (String) adherent.get("dn");
+                System.out.println(dn);
+
+                int tel = (int) adherent.get("tel");
+                System.out.println(tel);
+
+                String mail = (String) adherent.get("mail");
+                System.out.println(mail);
+
+                int num = (int) adherent.get("num");
+                System.out.println(num);
+                
+                this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num));
+
+            }
+        } catch (FileNotFoundException e) {
+        } catch (IOException | ParseException e) {
+        }
+
+        try {
+            JSONArray a = (JSONArray) parser.parse(new FileReader("ressource.json"));
+ 
+            for (Object o : a) {
+                JSONObject adherent = (JSONObject) o;
+
+                String titre = (String) adherent.get("titre");
+                System.out.println(titre);
+
+                String auteur = (String) adherent.get("auteur");
+                System.out.println(auteur);
+
+                String categorie = (String) adherent.get("categorie");
+                System.out.println(categorie);
+
+                String nationalite = (String) adherent.get("nationalite");
+                System.out.println(nationalite);
+
+                String reference = (String) adherent.get("reference");
+                System.out.println(reference);
+
+                String description = (String) adherent.get("description");
+                System.out.println(description);
+
+                int nbTotal = (int) adherent.get("nbTotal");
+                System.out.println(nbTotal);
+                
+                switch (categorie) {
+                case "livre":
+                    this.doc.add(new Livre(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                    break;
+                case "revue":
+                    this.doc.add(new Revue(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                    break;
+                case "cd":
+                    this.doc.add(new CD(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                    break;
+                case "dvd":
+                    this.doc.add(new DVD(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                    break;
+            }
+
+            }
+        } catch (FileNotFoundException e) {
+        } catch (IOException | ParseException e) {
+        }
+        try {
+            JSONArray a = (JSONArray) parser.parse(new FileReader("reserve.json"));
+
+            for (Object o : a) {
+                JSONObject adherent = (JSONObject) o;
+
+                String nom = (String) adherent.get("nom");
+                System.out.println(nom);
+
+                String prenom = (String) adherent.get("prenom");
+                System.out.println(prenom);
+
+                String adresse = (String) adherent.get("adresse");
+                System.out.println(adresse);
+
+                String dn = (String) adherent.get("dn");
+                System.out.println(dn);
+
+            }
+        } catch (FileNotFoundException e) {
+        } catch (IOException | ParseException e) {
+        }
+    }
+
+    public void finTravail() {
+
+    }
+
     /**
      * @return String
      */
@@ -76,10 +240,8 @@ public class Bibliotheque {
         int tel = Lire.i();
         System.out.print("- adresse email : ");
         String am = Lire.S();
-        System.out.print("- numero de carte : ");
-        int num = Lire.i();
 
-        this.adh.add(new Adherent(n, p, a, dn, tel, am));
+        this.adh.add(new Adherent(n, p, a, dn, tel, am, -1));
     }
 
     /**
@@ -321,6 +483,7 @@ public class Bibliotheque {
     }
 
     /**
+     * @param reference
      * @return Ressource
      */
     public Ressource chercherRessource(String reference) {
