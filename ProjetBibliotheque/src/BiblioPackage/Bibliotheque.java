@@ -3,6 +3,7 @@ package BiblioPackage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
@@ -217,7 +218,30 @@ public class Bibliotheque {
         }
     }
 
-    public void finTravail() {
+    public void finTravail() throws IOException {
+        JSONObject obj = new JSONObject();
+        JSONArray adherent = new JSONArray();
+        for (Adherent adh1 : this.adh) {
+            
+            obj.put("nom", adh1.getNom());
+            obj.put("prenom", adh1.getPrenom());
+            obj.put("adresse", adh1.getAdresse());
+            obj.put("dn", adh1.getDateNaissance());
+            obj.put("tel", adh1.getTelephone());
+            obj.put("mail", adh1.getMail());
+            obj.put("num", adh1.getNumeroCarte());
+            
+            adherent.add(obj);
+            obj.clear();
+        }
+
+
+        // try-with-resources statement based on post comment below :)
+        try (FileWriter file = new FileWriter("file1.txt")) {
+            file.write(adherent.toJSONString());
+            System.out.println("Successfully Copied JSON Object to File...");
+            System.out.println("\nJSON Object: " + obj);
+        }
 
     }
 
