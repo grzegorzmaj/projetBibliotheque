@@ -150,7 +150,7 @@ public class Bibliotheque {
                 int num = (int) (long) numm;
                 System.out.println(num);
                 
-                String mdp = (String) adherent.get("mdp");
+                String mdp = (String) biblio.get("mdp");
                 System.out.println(mdp);
 
                 this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num, mdp));
