@@ -120,27 +120,29 @@ public class Bibliotheque {
             JSONArray a = (JSONArray) parser.parse(new FileReader("bibliothecaire.json"));
 
             for (Object o : a) {
-                JSONObject adherent = (JSONObject) o;
+                JSONObject biblio = (JSONObject) o;
 
-                String nom = (String) adherent.get("nom");
+                String nom = (String) biblio.get("nom");
                 System.out.println(nom);
 
-                String prenom = (String) adherent.get("prenom");
+                String prenom = (String) biblio.get("prenom");
                 System.out.println(prenom);
 
-                String adresse = (String) adherent.get("adresse");
+                String adresse = (String) biblio.get("adresse");
                 System.out.println(adresse);
 
-                String dn = (String) adherent.get("dn");
+                String dn = (String) biblio.get("dn");
                 System.out.println(dn);
 
-                int tel = (int) adherent.get("tel");
+                long tell = (long) biblio.get("tel");
+                int tel = (int) (long) tell;
                 System.out.println(tel);
 
-                String mail = (String) adherent.get("mail");
+                String mail = (String) biblio.get("mail");
                 System.out.println(mail);
 
-                int num = (int) adherent.get("num");
+                long numm = (long) biblio.get("num");
+                int num = (int) (long) numm;
                 System.out.println(num);
 
                 this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num));
@@ -278,6 +280,8 @@ public class Bibliotheque {
             obj.put("nbDisponible", ress.getNbDisponible());
             obj.put("nbReserve", ress.getNbReserve());
             obj.put("nbTotal", ress.getNbTotal());
+            
+            ressource.add(obj);
         }
 
             // try-with-resources statement based on post comment below :)
@@ -287,17 +291,17 @@ public class Bibliotheque {
                 System.out.println("\nJSON Object: " + adherent);
             }
             try (FileWriter file1 = new FileWriter("bibliothecaire.json")) {
-                file1.write(adherent.toJSONString());
+                file1.write(biblio.toJSONString());
                 System.out.println("Successfully Copied JSON Object to File...");
                 System.out.println("\nJSON Object: " + biblio);
             }
-            try (FileWriter file2 = new FileWriter("ressourece.json")) {
-                file2.write(adherent.toJSONString());
+            try (FileWriter file2 = new FileWriter("ressource.json")) {
+                file2.write(ressource.toJSONString());
                 System.out.println("Successfully Copied JSON Object to File...");
                 System.out.println("\nJSON Object: " + ressource);
             }
             try (FileWriter file3 = new FileWriter("reserve.json")) {
-                file3.write(adherent.toJSONString());
+                file3.write(reserve.toJSONString());
                 System.out.println("Successfully Copied JSON Object to File...");
                 System.out.println("\nJSON Object: " + reserve);
             }
