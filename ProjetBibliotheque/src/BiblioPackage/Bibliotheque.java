@@ -1,13 +1,10 @@
 package BiblioPackage;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -70,7 +67,7 @@ public class Bibliotheque {
     public void debutTravail() {
 
         JSONParser parser = new JSONParser();
-
+        int maxCard = 0;
         try {
             JSONArray a = (JSONArray) parser.parse(new FileReader("adherent.json"));
 
@@ -89,26 +86,31 @@ public class Bibliotheque {
                 String dn = (String) adherent.get("dn");
                 System.out.println(dn);
 
-                int tel = (int) adherent.get("tel");
+                long tell = (long) adherent.get("tel");
+                int tel = (int) (long) tell;
                 System.out.println(tel);
 
                 String mail = (String) adherent.get("mail");
                 System.out.println(mail);
 
-                int num = (int) adherent.get("num");
+                long numm = (long) adherent.get("num");
+                int num = (int) (long) numm;
                 System.out.println(num);
 
-                JSONArray emprunte = (JSONArray) adherent.get("emprunte");
-
                 this.adh.add(new Adherent(nom, prenom, adresse, dn, tel, mail, num));
-                
-                for (Object c : emprunte) {
-                    System.out.println(c + "");
-                    this.adh.get(this.adh.size()).addEmprunte(null);//add sth about emprunte! need to change emprunte type
+
+                if (maxCard < num) {
+                    maxCard = num;
                 }
+                /*JSONArray emprunte = (JSONArray) adherent.get("emprunte");
+
+               
                 
-                
-                
+                 for (Object c : emprunte) {
+                 System.out.println(c + "");
+                 this.adh.get(this.adh.size()).addEmprunte(null);//add sth about emprunte! need to change emprunte type
+                 }*/
+
             }
         } catch (FileNotFoundException e) {
         } catch (IOException | ParseException e) {
@@ -140,9 +142,11 @@ public class Bibliotheque {
 
                 int num = (int) adherent.get("num");
                 System.out.println(num);
-                
-                this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num));
 
+                this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num));
+                if (maxCard < num) {
+                    maxCard = num;
+                }
             }
         } catch (FileNotFoundException e) {
         } catch (IOException | ParseException e) {
@@ -150,45 +154,55 @@ public class Bibliotheque {
 
         try {
             JSONArray a = (JSONArray) parser.parse(new FileReader("ressource.json"));
- 
-            for (Object o : a) {
-                JSONObject adherent = (JSONObject) o;
 
-                String titre = (String) adherent.get("titre");
+            for (Object o : a) {
+                JSONObject resource = (JSONObject) o;
+
+                String titre = (String) resource.get("titre");
                 System.out.println(titre);
 
-                String auteur = (String) adherent.get("auteur");
+                String auteur = (String) resource.get("auteur");
                 System.out.println(auteur);
 
-                String categorie = (String) adherent.get("categorie");
+                String categorie = (String) resource.get("categorie");
                 System.out.println(categorie);
 
-                String nationalite = (String) adherent.get("nationalite");
+                String nationalite = (String) resource.get("nationalite");
                 System.out.println(nationalite);
 
-                String reference = (String) adherent.get("reference");
+                String reference = (String) resource.get("reference");
                 System.out.println(reference);
 
-                String description = (String) adherent.get("description");
+                String description = (String) resource.get("description");
                 System.out.println(description);
-
-                int nbTotal = (int) adherent.get("nbTotal");
-                System.out.println(nbTotal);
                 
+                long nDisponible = (long) resource.get("nbDisponible");
+                int nbDisponible = (int) (long) nDisponible;
+                System.out.println(nbDisponible);
+                
+                long nReserve = (long) resource.get("nbReserve");
+                int nbReserve = (int) (long) nReserve;
+                System.out.println(nbReserve);
+            
+
+                long nTotal = (long) resource.get("nbTotal");
+                int nbTotal = (int) (long) nTotal;
+                System.out.println(nbTotal);
+
                 switch (categorie) {
-                case "livre":
-                    this.doc.add(new Livre(titre, auteur, categorie, nationalite, reference, description, nbTotal));
-                    break;
-                case "revue":
-                    this.doc.add(new Revue(titre, auteur, categorie, nationalite, reference, description, nbTotal));
-                    break;
-                case "cd":
-                    this.doc.add(new CD(titre, auteur, categorie, nationalite, reference, description, nbTotal));
-                    break;
-                case "dvd":
-                    this.doc.add(new DVD(titre, auteur, categorie, nationalite, reference, description, nbTotal));
-                    break;
-            }
+                    case "livre":
+                        this.doc.add(new Livre(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                        break;
+                    case "revue":
+                        this.doc.add(new Revue(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                        break;
+                    case "cd":
+                        this.doc.add(new CD(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                        break;
+                    case "dvd":
+                        this.doc.add(new DVD(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                        break;
+                }
 
             }
         } catch (FileNotFoundException e) {
@@ -216,13 +230,19 @@ public class Bibliotheque {
         } catch (FileNotFoundException e) {
         } catch (IOException | ParseException e) {
         }
+
+        Personne.setMinNombre(maxCard);
     }
 
     public void finTravail() throws IOException {
-        JSONObject obj = new JSONObject();
+        JSONObject obj;
         JSONArray adherent = new JSONArray();
+        JSONArray biblio = new JSONArray();
+        JSONArray ressource = new JSONArray();
+        JSONArray reserve = new JSONArray();
+
         for (Adherent adh1 : this.adh) {
-            
+            obj = new JSONObject();
             obj.put("nom", adh1.getNom());
             obj.put("prenom", adh1.getPrenom());
             obj.put("adresse", adh1.getAdresse());
@@ -230,26 +250,64 @@ public class Bibliotheque {
             obj.put("tel", adh1.getTelephone());
             obj.put("mail", adh1.getMail());
             obj.put("num", adh1.getNumeroCarte());
-            
+
             adherent.add(obj);
-            obj.clear();
         }
 
+        for (Bibliothecaire bib : this.bibliothecaire) {
+            obj = new JSONObject();
+            obj.put("nom", bib.getNom());
+            obj.put("prenom", bib.getPrenom());
+            obj.put("adresse", bib.getAdresse());
+            obj.put("dn", bib.getDateNaissance());
+            obj.put("tel", bib.getTelephone());
+            obj.put("mail", bib.getMail());
+            obj.put("num", bib.getNumeroCarte());
 
-        // try-with-resources statement based on post comment below :)
-        try (FileWriter file = new FileWriter("file1.txt")) {
-            file.write(adherent.toJSONString());
-            System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + obj);
+            biblio.add(obj);
         }
 
-    }
+        for (Ressource ress : this.doc) {
+            obj = new JSONObject();
+            obj.put("titre", ress.getTitre());
+            obj.put("auteur", ress.getAuteur());
+            obj.put("categorie", ress.getCategorie());
+            obj.put("nationalite", ress.getNationalite());
+            obj.put("reference", ress.getReference());
+            obj.put("description", ress.getDescription());
+            obj.put("nbDisponible", ress.getNbDisponible());
+            obj.put("nbReserve", ress.getNbReserve());
+            obj.put("nbTotal", ress.getNbTotal());
+        }
 
-    /**
-     * @return String
-     */
-    /**
-     */
+            // try-with-resources statement based on post comment below :)
+            try (FileWriter file = new FileWriter("adherent.json")) {
+                file.write(adherent.toJSONString());
+                System.out.println("Successfully Copied JSON Object to File...");
+                System.out.println("\nJSON Object: " + adherent);
+            }
+            try (FileWriter file1 = new FileWriter("bibliothecaire.json")) {
+                file1.write(adherent.toJSONString());
+                System.out.println("Successfully Copied JSON Object to File...");
+                System.out.println("\nJSON Object: " + biblio);
+            }
+            try (FileWriter file2 = new FileWriter("ressourece.json")) {
+                file2.write(adherent.toJSONString());
+                System.out.println("Successfully Copied JSON Object to File...");
+                System.out.println("\nJSON Object: " + ressource);
+            }
+            try (FileWriter file3 = new FileWriter("reserve.json")) {
+                file3.write(adherent.toJSONString());
+                System.out.println("Successfully Copied JSON Object to File...");
+                System.out.println("\nJSON Object: " + reserve);
+            }
+
+        }
+        /**
+         * @return String
+         */
+        /**
+         */
     public void ajouterAdherent() {//idée voir si adhérent déjà inscrit
         System.out.println("Veuillez entrer :");
         System.out.print("- nom : ");
@@ -495,6 +553,8 @@ public class Bibliotheque {
     }
 
     /**
+     * @param titre
+     * @param auteur
      * @return Ressource
      */
     public Ressource chercherRessource(String titre, String auteur) {
@@ -540,18 +600,41 @@ public class Bibliotheque {
         }
         return null;
     }
+    
+    public Adherent chercherAdherent(int num) {
+        for (Adherent adh1 : adh) {
+            if (adh1.getNumeroCarte() == num) {
+                return adh1;
+            }
+        }
+        return null;
+    }
 
     public boolean faireReservation() {
-        System.out.println("Veuillez entrer:");
-        System.out.print("- nom d'adherent : ");
-        String nom = Lire.S();
-        System.out.print("- prenom d'adherent : ");
-        String prenom = Lire.S();
-        Adherent ad = this.chercherAdherent(nom, prenom);
+        Adherent ad = null;
+        System.out.println("Veuillez entrer: \n"
+                + "1) nom"
+                + "2) numero carte");
+      
+        switch (Lire.choix(2)) {
+            case 1:
+                System.out.print("- nom d'adherent : ");
+                String nom = Lire.S();
+                System.out.print("- prenom d'adherent : ");
+                String prenom = Lire.S();
+                ad = this.chercherAdherent(nom, prenom);
+                break;
+            case 2:
+                System.out.print("- numero carte d'adherent : ");
+                int num = Lire.i();
+                ad = this.chercherAdherent(num);
+                break;
+        }
+        
         if (ad != null) {
             System.out.println("Veuillez entrer:");
             System.out.print("- mot cle : ");
-            String res = Lire.S();
+            String ress = Lire.S();
         } else {
             System.out.println("Il n'y a pas cet adherent.");
         }
@@ -578,17 +661,32 @@ public class Bibliotheque {
     }
 
     public void emprunter() {
-        System.out.println("Veuillez entrer:");
-        System.out.print("- nom d'adherent : ");
-        String nom = Lire.S();
-        System.out.print("- prenom d'adherent : ");
-        String prenom = Lire.S();
-        Adherent ad = this.chercherAdherent(nom, prenom);
+        Adherent ad = null;
+        System.out.println("Veuillez entrer: \n"
+                + "1) nom"
+                + "2) numero carte");
+      
+        switch (Lire.choix(2)) {
+            case 1:
+                System.out.print("- nom d'adherent : ");
+                String nom = Lire.S();
+                System.out.print("- prenom d'adherent : ");
+                String prenom = Lire.S();
+                ad = this.chercherAdherent(nom, prenom);
+                break;
+            case 2:
+                System.out.print("- numero carte d'adherent : ");
+                int num = Lire.i();
+                ad = this.chercherAdherent(num);
+                break;
+        }
+
         if (ad != null) {
             ;
         } else {
             System.out.println("Il n'y a pas cet adherent.");
         }
+
     }
 
 }

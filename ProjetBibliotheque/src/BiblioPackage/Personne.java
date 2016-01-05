@@ -32,6 +32,8 @@ public class Personne {
         if (num < 0) {
             this.numeroCarte = ++nombre;
         }
+        else
+            this.numeroCarte = num;
     }
 
   //
@@ -40,6 +42,15 @@ public class Personne {
   //
     // Accessor methods
     //
+     /**
+     * Set the value of nombre
+     *
+     * @param n
+     */
+    static public void setMinNombre(int n){
+        Personne.nombre = n;
+    }
+    
     /**
      * Get the value of nombre
      *
@@ -183,7 +194,10 @@ public class Personne {
      */
     @Override
     public String toString() {
-        return null;
+        
+        return "Nom: " + this.nom + "\n"
+            + "Prenom: " + this.prenom + "\n"
+            + "NumeroCarte: " +this.numeroCarte;
     }
 
 }
