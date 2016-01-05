@@ -18,17 +18,19 @@ public class Personne {
     private int telephone;
     private String mail;
     private int numeroCarte;
+    private String motDePasse;
 
   //
     // Constructors
     //
-    public Personne(String n, String p, String a, String dn, int tel, String am, int num) {
+    public Personne(String n, String p, String a, String dn, int tel, String am, int num, String mdp) {
         this.nom = n;
         this.prenom = p;
         this.adresse = a;
         this.dateNaissance = dn;
         this.telephone = tel;
         this.mail = am;
+        this.motDePasse = mdp;
         if (num < 0) {
             this.numeroCarte = ++nombre;
         }
@@ -186,6 +188,23 @@ public class Personne {
         return numeroCarte;
     }
 
+    /**
+     * Set the value of mot de passe
+     *
+     * @param newVar the new value of mot de passe
+     */
+    public void setMdp(String newVar) {
+        motDePasse = newVar;
+    }
+
+    /**
+     * Get the value of mot de passe
+     *
+     * @return the value of mot de passe
+     */
+    public String getMdp() {
+        return motDePasse;
+    }
   //
     // Other methods
     //

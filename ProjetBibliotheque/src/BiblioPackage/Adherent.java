@@ -23,8 +23,8 @@ public class Adherent extends Personne {
   //
   // Constructors
   //
-  public Adherent (String n, String p, String a, String dn, int tel, String am, int num) {
-      super(n,p,a,dn,tel,am, num);
+  public Adherent (String n, String p, String a, String dn, int tel, String am, int num,  String mdp) {
+      super(n,p,a,dn,tel,am, num, mdp);
       this.emprunteList = new ArrayList();
   }
   

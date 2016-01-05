@@ -36,7 +36,9 @@ public class Bibliotheque {
         this.Nom = nom;
         doc = new ArrayList();
         adh = new ArrayList();
+        adh.add(new Adherent("Defaut", "", "","",0,"",0,"password"));
         bibliothecaire = new ArrayList();
+        bibliothecaire.add(new Bibliothecaire("Defaut", "", "","",0,"",0,"password"));
         res = new ArrayList();
     }
 
@@ -96,8 +98,11 @@ public class Bibliotheque {
                 long numm = (long) adherent.get("num");
                 int num = (int) (long) numm;
                 System.out.println(num);
+                
+                String mdp = (String) adherent.get("mdp");
+                System.out.println(mdp);
 
-                this.adh.add(new Adherent(nom, prenom, adresse, dn, tel, mail, num));
+                this.adh.add(new Adherent(nom, prenom, adresse, dn, tel, mail, num, mdp));
 
                 if (maxCard < num) {
                     maxCard = num;
@@ -144,8 +149,11 @@ public class Bibliotheque {
                 long numm = (long) biblio.get("num");
                 int num = (int) (long) numm;
                 System.out.println(num);
+                
+                String mdp = (String) adherent.get("mdp");
+                System.out.println(mdp);
 
-                this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num));
+                this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num, mdp));
                 if (maxCard < num) {
                     maxCard = num;
                 }
@@ -252,6 +260,7 @@ public class Bibliotheque {
             obj.put("tel", adh1.getTelephone());
             obj.put("mail", adh1.getMail());
             obj.put("num", adh1.getNumeroCarte());
+            obj.put("mdp", adh1.getMdp());
 
             adherent.add(obj);
         }
@@ -265,6 +274,7 @@ public class Bibliotheque {
             obj.put("tel", bib.getTelephone());
             obj.put("mail", bib.getMail());
             obj.put("num", bib.getNumeroCarte());
+            obj.put("mdp", bib.getMdp());
 
             biblio.add(obj);
         }
@@ -326,8 +336,10 @@ public class Bibliotheque {
         int tel = Lire.i();
         System.out.print("- adresse email : ");
         String am = Lire.S();
+        System.out.print("- mot de passe : ");
+        String mdp = Lire.S();
 
-        this.adh.add(new Adherent(n, p, a, dn, tel, am, -1));
+        this.adh.add(new Adherent(n, p, a, dn, tel, am, -1, mdp));
     }
 
     /**
@@ -609,6 +621,15 @@ public class Bibliotheque {
         for (Adherent adh1 : adh) {
             if (adh1.getNumeroCarte() == num) {
                 return adh1;
+            }
+        }
+        return null;
+    }
+    
+    public Bibliothecaire chercherBibliothecaire(int num) {
+        for (Bibliothecaire bib1 : bibliothecaire) {
+            if (bib1.getNumeroCarte() == num) {
+                return bib1;
             }
         }
         return null;
