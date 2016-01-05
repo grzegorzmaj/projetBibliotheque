@@ -34,6 +34,20 @@ public class Ressource {
       this.reference=ref;
       this.description=desc;
       this.nbTotal=nb;
+      this.nbDisponible = nb;
+      this.nbReserve = 0;
+  }
+  
+  public Ressource (String t, String aut, String cat, String nation, String ref, String desc, int nb, int nbD, int nbR) {
+      this.titre=t;
+      this.auteur=aut;
+      this.categorie=cat;
+      this.nationalite=nation;
+      this.reference=ref;
+      this.description=desc;
+      this.nbTotal=nb;
+      this.nbDisponible = nbD;
+      this.nbReserve = nbR;
   }
   
   //

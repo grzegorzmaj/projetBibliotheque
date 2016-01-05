@@ -1,5 +1,6 @@
 package BiblioPackage;
 
+import static BiblioPackage.Main.afficherResultat;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -241,16 +242,16 @@ public class Bibliotheque {
 
                 switch (type) {
                     case "livre":
-                        this.doc.add(new Livre(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                        this.doc.add(new Livre(titre, auteur, categorie, nationalite, reference, description, nbTotal, nbDisponible, nbReserve));
                         break;
                     case "revue":
-                        this.doc.add(new Revue(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                        this.doc.add(new Revue(titre, auteur, categorie, nationalite, reference, description, nbTotal, nbDisponible, nbReserve));
                         break;
                     case "cd":
-                        this.doc.add(new CD(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                        this.doc.add(new CD(titre, auteur, categorie, nationalite, reference, description, nbTotal, nbDisponible, nbReserve));
                         break;
                     case "dvd":
-                        this.doc.add(new DVD(titre, auteur, categorie, nationalite, reference, description, nbTotal));
+                        this.doc.add(new DVD(titre, auteur, categorie, nationalite, reference, description, nbTotal, nbDisponible, nbReserve));
                         break;
                 }
 
@@ -740,47 +741,151 @@ public class Bibliotheque {
     }
 
     public boolean faireReservation(Adherent ad) {
-
-        if (ad != null) {
-            System.out.println("Veuillez entrer:");
-            System.out.print("- mot cle : ");
-            String ress = Lire.S();
-        } else {
-            System.out.println("Il n'y a pas cet adherent.");
+        if (ad.getNbReserve() > max_reserve) {
+            System.out.println("Reservation impossible. Nombre reserve depasse.");
+            return false;
         }
+        ArrayList<Resultat> r = new ArrayList();
+        System.out.println("Voulez-vous chercher avec : ");
+        System.out.println("    1) des mots cles");
+        System.out.println("    2) des criteres ");
+        System.out.println("    3) la reference");
+        int d = Lire.choix(3);
+        switch (d) {
+            case 1:
+                r = this.chercherRessourceMotCles();
+                break;
+            case 2:
+                r = this.chercherRessourceCriteres();
+                break;
+            case 3:
+                r = this.checherRessourceRef();
+                break;
+        }
+        afficherResultat(r);
+        System.out.println("Reserve ressource numero: (1-" + (r.size() + 1) + ")");
+        int e = Lire.choix(r.size());
+
+        res.add(new Reservation(r.get(e - 1).getRessource(), ad));
+        r.get(e - 1).getRessource().setNbReserve(r.get(e - 1).getRessource().getNbReserve() + 1);
         return true;
     }
 
     public boolean faireReservation(Ressource reserve, Adherent ad) {
-        if (ad != null) {
-            if (ad.getNbReserve() > max_reserve) {
-                System.out.println("Reservation impossible. Nombre resreve depasse.");
-                return false;
-            }
-            //res.add(new Reservation());
-        } else {
-            System.out.println("Il n'y a pas cet adherent.");
+        if (ad.getNbReserve() > max_reserve) {
+            System.out.println("Reservation impossible. Nombre reserve depasse.");
+            return false;
         }
+        res.add(new Reservation(reserve, ad));
+        reserve.setNbReserve(reserve.getNbReserve()+1);
         return true;
     }
 
-    public void emprunter(Adherent ad) {
-
-        if (ad != null) {
-            ;
-        } else {
-            System.out.println("Il n'y a pas cet adherent.");
+    public boolean emprunter(Adherent ad) {
+        ArrayList<Resultat> r = new ArrayList();
+        System.out.println("Voulez-vous chercher avec : ");
+        System.out.println("    1) des mots cles");
+        System.out.println("    2) des criteres ");
+        System.out.println("    3) la reference");
+        int d = Lire.choix(3);
+        switch (d) {
+            case 1:
+                r = this.chercherRessourceMotCles();
+                break;
+            case 2:
+                r = this.chercherRessourceCriteres();
+                break;
+            case 3:
+                r = this.checherRessourceRef();
+                break;
         }
+        afficherResultat(r);
+        System.out.println("Emprunte ressource numero: (1-" + (r.size() + 1) + ")");
+        int e = Lire.choix(r.size());
 
+        if (r.get(e - 1).getRessource().getNbDisponible() > 0) {
+            if (r.get(e - 1).getRessource() instanceof Livre) {
+                if (ad.getNbLivre() >= this.max_livre) {
+                    System.out.println("Emprunte impossible. Nombre livres empruntees depasse.");
+                    return false;
+                }
+            } else if (r.get(e - 1).getRessource() instanceof Revue) {
+                if (ad.getNbRevue() >= this.max_revue) {
+                    System.out.println("Emprunte impossible. Nombre revues empruntees depasse.");
+                    return false;
+                }
+            } else if (r.get(e - 1).getRessource() instanceof CD) {
+                if (ad.getNbCd() >= this.max_cd) {
+                    System.out.println("Emprunte impossible. Nombre cd empruntees depasse.");
+                    return false;
+                }
+            } else if (r.get(e - 1).getRessource() instanceof DVD) {
+                if (ad.getNbDVD() >= this.max_dvd) {
+                    System.out.println("Emprunte impossible. Nombre dvd empruntees depasse.");
+                    return false;
+                }
+            } else {
+
+                r.get(e - 1).getRessource().setNbDisponible(r.get(e - 1).getRessource().getNbDisponible() - 1);
+                ad.addEmprunte(new Emprunt(r.get(e - 1).getRessource(), ad));
+                return true;
+            }
+        } else {
+            System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire reservation \n 2) Revenir au menu principal \n");
+            e = Lire.choix(2);
+            switch (e) {
+                case 1:
+                    this.faireReservation(r.get(e - 1).getRessource(), ad);
+                    break;
+                case 2:
+                    break;
+            }
+        }
+        return false;
     }
-    
-       public void emprunter(Ressource ress, Adherent ad) {
 
-        if (ad != null) {
-            ;
+    public boolean emprunter(Ressource ress, Adherent ad) {
+        if (ress.getNbDisponible() > 0) {
+            if (ress instanceof Livre) {
+                if (ad.getNbLivre() >= this.max_livre) {
+                    System.out.println("Emprunte impossible. Nombre livres empruntees depasse.");
+                    return false;
+                }
+            } else if (ress instanceof Revue) {
+                if (ad.getNbRevue() >= this.max_revue) {
+                    System.out.println("Emprunte impossible. Nombre revues empruntees depasse.");
+                    return false;
+                }
+            } else if (ress instanceof CD) {
+                if (ad.getNbCd() >= this.max_cd) {
+                    System.out.println("Emprunte impossible. Nombre cd empruntees depasse.");
+                    return false;
+                }
+            } else if (ress instanceof DVD) {
+                if (ad.getNbDVD() >= this.max_dvd) {
+                    System.out.println("Emprunte impossible. Nombre dvd empruntees depasse.");
+                    return false;
+                }
+            } else {
+                ress.setNbDisponible(ress.getNbDisponible() - 1);
+                ad.addEmprunte(new Emprunt(ress, ad));
+                return true;
+            }
         } else {
-            System.out.println("Il n'y a pas cet adherent.");
+            System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire reservation \n 2) Revenir au menu principal \n");
+            int e = Lire.choix(2);
+            switch (e) {
+                case 1:
+                    this.faireReservation(ress, ad);
+                    break;
+                case 2:
+                    break;
+            }
         }
+        return false;
+    }
+
+    public void rendreRessource(Ressource ress, Adherent ad) {
 
     }
 

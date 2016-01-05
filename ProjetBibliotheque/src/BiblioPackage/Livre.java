@@ -19,6 +19,10 @@ public class Livre extends Ressource {
       super(t,aut,cat,nation,ref,desc,nb);
   }
   
+  public Livre (String t, String aut, String cat, String nation, String ref, String desc, int nb, int nbD, int nbR) {
+      super(t,aut,cat,nation,ref,desc,nb, nbD, nbR);
+  }
+  
   //
   // Methods
   //
