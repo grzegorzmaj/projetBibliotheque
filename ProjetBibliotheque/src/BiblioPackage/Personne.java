@@ -1,7 +1,5 @@
 package BiblioPackage;
 
-import java.util.*;
-
 /**
  * Class Personne
  */

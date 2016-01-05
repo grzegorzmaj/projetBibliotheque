@@ -18,7 +18,7 @@ public class Main {
         try {
             b.finTravail();
         } catch (IOException ex) {
-            System.out.println("Couldn't create adhrent file!" + ex.toString());
+            System.out.println("Couldn't create adherent file!" + ex.toString());
         }
     }
 
@@ -111,7 +111,7 @@ public class Main {
             if(adh.getMdp().equals(mdp)){
                 System.out.println("Vous etes bien connecté");
                 estConnecte=true;
-                menuAdh(b);
+                menuAdh(b, adh);
             }
             else{
                 System.out.println("Votre mot de passe est faux est faux");  
@@ -133,7 +133,7 @@ public class Main {
             if(bib.getMdp().equals(mdp)){
                 System.out.println("Vous etes bien connecté");
                 estConnecte=true;
-                menuBib(b);
+                menuBib(b, bib);
             }
             else{
                 System.out.println("Votre mot de passe est faux est faux");  
@@ -144,21 +144,35 @@ public class Main {
         }
     }
     
-    public static void menuAdh(Bibliotheque b){int c=0;
+    public static void menuAdh(Bibliotheque b, Adherent adh){
+        int c=0;
         while(c!=6){
             System.out.println("    1) Chercher des ressources");
             System.out.println("    2) Afficher les ressources empruntées");
             System.out.println("    3) Afficher les ressources réservées");
-            System.out.println("    4) Réserver une ressource");
-            System.out.println("    5) Afficher les ressources");
-            System.out.println("    6) Se déconnecter");
-            c =Lire.choix(6);
+            System.out.println("    4) Emprunter une ressource");
+            System.out.println("    5) Réserver une ressource");
+            System.out.println("    6) Afficher les ressources");
+            System.out.println("    7) Se déconnecter");
+            c =Lire.choix(7);
 
             switch(c){
                 case 1:
                     menuRechercher(b);
                     break;
+                case 2:
+                    adh.afficherEmprunte();
+                    break;
+                case 3:
+                    b.afficherReserve(adh);
+                    break;
+                case 4:
+                    b.emprunter(adh);
+                    break;
                 case 5:
+                    b.faireReservation(adh);
+                    break;
+                case 6:
                     b.afficherRessource();
                     break;
             }
@@ -167,7 +181,7 @@ public class Main {
         
     }
     
-    public static void menuBib(Bibliotheque b){
+    public static void menuBib(Bibliotheque b, Bibliothecaire bib){
         int c=0;
         while(c!=8){
             System.out.println("    1) Ajouter des adhérents");

@@ -139,8 +139,12 @@ public class Adherent extends Personne {
    * Get the List of Emprunte objects held by emprunteVector
    * @return List of Emprunte objects held by emprunteVector
    */
-  public List getEmprunteList () {
-    return (List) emprunteList;
+  public List<Emprunt> getEmprunteList () {
+    return (List<Emprunt>) emprunteList;
+  }
+  
+  public void afficherEmprunte(){
+      
   }
 
 
