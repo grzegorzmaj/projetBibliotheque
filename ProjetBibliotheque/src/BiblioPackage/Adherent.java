@@ -28,6 +28,16 @@ public class Adherent extends Personne {
       this.emprunteList = new ArrayList();
   }
   
+  public Adherent (String n, String p, String a, String dn, int tel, String am, int num,  String mdp, int l, int r, int c, int d, int re) {
+      super(n,p,a,dn,tel,am, num, mdp);
+      this.emprunteList = new ArrayList();
+      nbLivre = l;
+      nbCd = c;
+      nbRevue = r;
+      nbDVD = d;
+      nbReserve = re;
+  }
+  
   //
   // Methods
   //
@@ -122,6 +132,7 @@ public class Adherent extends Personne {
   //
 /**
    * Add a Emprunte object to the emprunteVector List
+     * @param obj
    */
   public void addEmprunte (Emprunt obj) {
     emprunteList.add(obj);
@@ -129,6 +140,7 @@ public class Adherent extends Personne {
 
   /**
    * Remove a Emprunte object from emprunteVector List
+     * @param obj
    */
   public void removeEmprunte (Emprunt obj)
   {

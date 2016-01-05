@@ -38,6 +38,8 @@ public class Bibliotheque {
         adh = new ArrayList();
         bibliothecaire = new ArrayList();
         res = new ArrayList();
+        
+        
     }
 
     //
@@ -100,7 +102,27 @@ public class Bibliotheque {
                 String mdp = (String) adherent.get("mdp");
                 System.out.println(mdp);
 
-                Adherent ad = new Adherent(nom, prenom, adresse, dn, tel, mail, num, mdp);
+                long livv = (long) adherent.get("nbLivre");
+                int liv = (int) (long) livv;
+                System.out.println(liv);
+
+                long revv = (long) adherent.get("nbRevue");
+                int rev = (int) (long) revv;
+                System.out.println(rev);
+
+                long cdd = (long) adherent.get("nbCd");
+                int cd = (int) (long) cdd;
+                System.out.println(cd);
+
+                long dvdd = (long) adherent.get("nbDvd");
+                int dvd = (int) (long) dvdd;
+                System.out.println(dvd);
+
+                long ree = (long) adherent.get("nbReserve");
+                int re = (int) (long) ree;
+                System.out.println(re);
+               
+                Adherent ad = new Adherent(nom, prenom, adresse, dn, tel, mail, num, mdp, liv, rev, cd, dvd, re);
 
                 if (maxCard < num) {
                     maxCard = num;
@@ -168,7 +190,7 @@ public class Bibliotheque {
 
                 String mdp = (String) biblio.get("mdp");
                 System.out.println(mdp);
-
+               
                 this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num, mdp));
                 if (maxCard < num) {
                     maxCard = num;
@@ -213,8 +235,11 @@ public class Bibliotheque {
                 long nTotal = (long) resource.get("nbTotal");
                 int nbTotal = (int) (long) nTotal;
                 System.out.println(nbTotal);
+                
+                String type = (String) resource.get("type");
+                System.out.println(type);
 
-                switch (categorie) {
+                switch (type) {
                     case "livre":
                         this.doc.add(new Livre(titre, auteur, categorie, nationalite, reference, description, nbTotal));
                         break;
@@ -262,8 +287,12 @@ public class Bibliotheque {
         } catch (FileNotFoundException e) {
         } catch (IOException | ParseException e) {
         }
-
+        
+        
+        if(this.bibliothecaire.size()<1)
+            this.bibliothecaire.add(new Bibliothecaire("new","new","", "", 12345, "", -1, "password"));
         Personne.setMinNombre(maxCard);
+        
     }
 
     public void finTravail() throws IOException {
@@ -285,6 +314,11 @@ public class Bibliotheque {
             obj.put("mail", adh1.getMail());
             obj.put("num", adh1.getNumeroCarte());
             obj.put("mdp", adh1.getMdp());
+            obj.put("nbLivre", adh1.getNbLivre());
+            obj.put("nbRevue", adh1.getNbRevue());
+            obj.put("nbCd", adh1.getNbCd());
+            obj.put("nbDvd", adh1.getNbDVD());
+            obj.put("nbReserve", adh1.getNbReserve());
             for (Emprunt emprunteList1 : adh1.getEmprunteList()) {
                 emp = new JSONObject();
                 emp.put("titre", emprunteList1.getTitre());
@@ -325,7 +359,15 @@ public class Bibliotheque {
             obj.put("nbDisponible", ress.getNbDisponible());
             obj.put("nbReserve", ress.getNbReserve());
             obj.put("nbTotal", ress.getNbTotal());
-
+            if(ress instanceof Livre)
+                obj.put("type", "livre");
+            else if(ress instanceof Revue)
+                obj.put("type", "revue");
+            else if(ress instanceof CD)
+                obj.put("type", "cd");
+            else if(ress instanceof DVD)
+                obj.put("type", "dvd");
+           
             ressource.add(obj);
         }
 
@@ -723,6 +765,16 @@ public class Bibliotheque {
     }
 
     public void emprunter(Adherent ad) {
+
+        if (ad != null) {
+            ;
+        } else {
+            System.out.println("Il n'y a pas cet adherent.");
+        }
+
+    }
+    
+       public void emprunter(Ressource ress, Adherent ad) {
 
         if (ad != null) {
             ;

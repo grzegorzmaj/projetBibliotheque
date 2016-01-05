@@ -49,10 +49,34 @@ public class Main {
             }
         }
     }
-
     public static void menuRechercher(Bibliotheque b){
-        ArrayList<Resultat> r = null;
+        ArrayList<Resultat> r = new ArrayList();
         int e = 3;
+        while (e == 3) {
+            System.out.println("Voulez-vous chercher avec : ");
+            System.out.println("    1) des mots cles");
+            System.out.println("    2) des criteres ");
+            System.out.println("    3) la reference");
+            int d = Lire.choix(3);
+            switch (d) {
+                case 1:
+                    r = b.chercherRessourceMotCles();
+                    break;
+                case 2:
+                    r = b.chercherRessourceCriteres();
+                    break;
+                case 3:
+                    r = b.checherRessourceRef();
+                    break;
+            }
+            afficherResultat(r);    
+        }
+    }
+
+    public static void menuRechercher(Bibliotheque b, Adherent adh){
+        ArrayList<Resultat> r = new ArrayList();
+        int e = 3;
+        int ee=0;
         while (e == 3) {
             System.out.println("Voulez-vous chercher avec : ");
             System.out.println("    1) des mots cles");
@@ -80,6 +104,24 @@ public class Main {
             System.out.println("    3) faire une nouvelle recherche");
             System.out.println("    4) revenir au menu principal");
             e = Lire.choix(4);
+            
+            switch(e){
+                case 1:
+                    System.out.println("Emprunte ressource numero: (1-" + (r.size()+1) + ")");
+                    ee = Lire.choix(r.size());
+                    b.emprunter(r.get(ee-1).getRessource() , adh);
+                    break;
+                case 2:
+                    System.out.println("Reserve ressource numero: (1-" + (r.size()+1) + ")");
+                    ee = Lire.choix(r.size());
+                    b.faireReservation(r.get(ee-1).getRessource() , adh);
+                    break;
+                case 3:
+                    menuRechercher(b,adh);
+                    break;
+                case 4:
+                    break;
+            }
         }
         
     }
@@ -95,7 +137,7 @@ public class Main {
                 System.out.println("Les resultats sont :");
             }
             for (int i = 0; i < r.size(); i++) {
-                System.out.println(i + ") " + r.get(i).toString());
+                System.out.println((i+1) + ") " + r.get(i).toString());
                 System.out.println();
             }
         }
@@ -146,7 +188,7 @@ public class Main {
     
     public static void menuAdh(Bibliotheque b, Adherent adh){
         int c=0;
-        while(c!=6){
+        while(c!=7){
             System.out.println("    1) Chercher des ressources");
             System.out.println("    2) Afficher les ressources empruntées");
             System.out.println("    3) Afficher les ressources réservées");
@@ -158,7 +200,7 @@ public class Main {
 
             switch(c){
                 case 1:
-                    menuRechercher(b);
+                    menuRechercher(b, adh);
                     break;
                 case 2:
                     adh.afficherEmprunte();
