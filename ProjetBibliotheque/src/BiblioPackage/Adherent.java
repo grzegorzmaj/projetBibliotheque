@@ -155,8 +155,9 @@ public class Adherent extends Personne {
     return (List<Emprunt>) emprunteList;
   }
   
-  public void afficherEmprunte(){
-      
+  public int afficherEmprunte(){
+      int nombre=0;
+      return nombre;
   }
 
 

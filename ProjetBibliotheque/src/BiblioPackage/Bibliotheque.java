@@ -885,7 +885,79 @@ public class Bibliotheque {
         return false;
     }
 
-    public void rendreRessource(Ressource ress, Adherent ad) {
+    public void rendreRessource(Adherent ad) {
+        int e = 0;
+        int i;
+        while (e != 3) {
+            System.out.println("Choisi ressource a rendre: \n"
+                    + "1) Entreter titre.\n"
+                    + "2) Afficher tout ressources empruntees.\n"
+                    + "3) Revenir au menu principal.");
+            e = Lire.choix(3);
+            switch (e) {
+                case 1:
+                    if (!ad.getEmprunteList().isEmpty()) {
+                        System.out.print("Titre: ");
+                        String tit = Lire.S();
+                        i = 0;
+                        for (Emprunt emp : ad.getEmprunteList()) {
+                            if (emp.getTitre().equals(tit)) {
+
+                                System.out.println("Vous voulez rendre: \n" + ad.getEmprunteList().get(i).toString() + "\n ? (y/n)");
+                                String choix = Lire.S();
+                                while (!choix.equals("n")) {
+                                    switch (choix) {
+                                        case "y":
+                                            int nb = this.chercherRessource(ad.getEmprunteList().get(i).getReference()).getNbDisponible();
+                                            this.chercherRessource(ad.getEmprunteList().get(i).getReference()).setNbDisponible(nb + 1);
+                                            ad.removeEmprunte(ad.getEmprunteList().get(i));
+                                            System.out.println("Ressource:\n" + ad.getEmprunteList().get(i).toString() + " rendre");
+                                            choix = "n";
+                                            break;
+                                        default:
+                                            System.out.println("Taper y ou n:");
+                                            choix = Lire.S();
+                                            break;
+                                    }
+                                }
+                            }
+                            i++;
+                        }
+                        if (i == ad.getEmprunteList().size()) {
+                            System.out.println("Ressource: " + tit + "pas trouve.");
+                        }
+                    } else {
+                        System.out.println("Rien a rendre.");
+                    }
+                    break;
+                case 2:
+                    int nombre = ad.afficherEmprunte();
+                    if (nombre == 0) {
+                        System.out.println("Rien a rendre.");
+                    } else {
+                        System.out.println("Choisi ressource a rendre 1-" + nombre + ": \n");
+                        i = Lire.choix(nombre)-1;
+                        System.out.println("Vous voulez rendre: \n" + ad.getEmprunteList().get(i).toString() + "\n ? (y/n)");
+                        String choix = Lire.S();
+                        while (!choix.equals("n")) {
+                            switch (choix) {
+                                case "y":
+                                    int nb = this.chercherRessource(ad.getEmprunteList().get(i).getReference()).getNbDisponible();
+                                    this.chercherRessource(ad.getEmprunteList().get(i).getReference()).setNbDisponible(nb+1);
+                                    ad.removeEmprunte(ad.getEmprunteList().get(i));
+                                    System.out.println("Ressource:\n" + ad.getEmprunteList().get(i).toString() + " rendre");
+                                    choix = "n";
+                                    break;
+                                default:
+                                    System.out.println("Taper y ou n:");
+                                    choix = Lire.S();
+                                    break;
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
 
     }
 
