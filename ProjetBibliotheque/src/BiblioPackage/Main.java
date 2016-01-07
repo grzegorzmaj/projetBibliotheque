@@ -8,6 +8,7 @@ import java.util.*;
  * @author Yann
  */
 public class Main {
+
     private static boolean estConnecte = false;
 
     public static void main(String args[]) {
@@ -49,7 +50,8 @@ public class Main {
             }
         }
     }
-    public static void menuRechercher(Bibliotheque b){
+
+    public static void menuRechercher(Bibliotheque b) {
         ArrayList<Resultat> r = new ArrayList();
         int e = 3;
         while (e == 3) {
@@ -69,14 +71,14 @@ public class Main {
                     r = b.checherRessourceRef();
                     break;
             }
-            afficherResultat(r);    
+            afficherResultat(r);
         }
     }
 
-    public static void menuRechercher(Bibliotheque b, Adherent adh){
+    public static void menuRechercher(Bibliotheque b, Adherent adh) {
         ArrayList<Resultat> r = new ArrayList();
         int e = 3;
-        int ee=0;
+        int ee = 0;
         while (e == 3) {
             System.out.println("Voulez-vous chercher avec : ");
             System.out.println("    1) des mots cles");
@@ -104,29 +106,28 @@ public class Main {
             System.out.println("    3) faire une nouvelle recherche");
             System.out.println("    4) revenir au menu principal");
             e = Lire.choix(4);
-            
-            switch(e){
+
+            switch (e) {
                 case 1:
-                    System.out.println("Emprunte ressource numero: (1-" + (r.size()+1) + ")");
+                    System.out.println("Emprunte ressource numero: (1-" + (r.size() + 1) + ")");
                     ee = Lire.choix(r.size());
-                    b.emprunter(r.get(ee-1).getRessource() , adh);
+                    b.emprunter(r.get(ee - 1).getRessource(), adh);
                     break;
                 case 2:
-                    System.out.println("Reserve ressource numero: (1-" + (r.size()+1) + ")");
+                    System.out.println("Reserve ressource numero: (1-" + (r.size() + 1) + ")");
                     ee = Lire.choix(r.size());
-                    b.faireReservation(r.get(ee-1).getRessource() , adh);
+                    b.faireReservation(r.get(ee - 1).getRessource(), adh);
                     break;
                 case 3:
-                    menuRechercher(b,adh);
+                    menuRechercher(b, adh);
                     break;
                 case 4:
                     break;
             }
         }
-        
+
     }
-    
-    
+
     public static void afficherResultat(ArrayList<Resultat> r) {
         if (r.isEmpty()) {
             System.out.println("Il n'y a pas de resultat.");
@@ -137,58 +138,54 @@ public class Main {
                 System.out.println("Les resultats sont :");
             }
             for (int i = 0; i < r.size(); i++) {
-                System.out.println((i+1) + ") " + r.get(i).toString());
+                System.out.println((i + 1) + ") " + r.get(i).toString());
                 System.out.println();
             }
         }
     }
-    
-    public static void connecterAdh(Bibliotheque b){
+
+    public static void connecterAdh(Bibliotheque b) {
         System.out.println("Veuillez entrer votre numéro de carte :");
         int num = Lire.i();
         System.out.println("Veuillez entrer votre mot de passe :");
         String mdp = Lire.S();
-        Adherent adh=b.chercherAdherent(num);
-        if(adh!=null){
-            if(adh.getMdp().equals(mdp)){
+        Adherent adh = b.chercherAdherent(num);
+        if (adh != null) {
+            if (adh.getMdp().equals(mdp)) {
                 System.out.println("Vous etes bien connecté");
-                estConnecte=true;
+                estConnecte = true;
                 menuAdh(b, adh);
+            } else {
+                System.out.println("Votre mot de passe est faux est faux");
             }
-            else{
-                System.out.println("Votre mot de passe est faux est faux");  
-            }
-        }
-        else{
+        } else {
             System.out.println("Votre numéro de carte est faux");
         }
-        
+
     }
-    
-    public static void connecterBib(Bibliotheque b){
+
+    public static void connecterBib(Bibliotheque b) {
         System.out.println("Veuillez entrer votre numéro de carte :");
         int num = Lire.i();
         System.out.println("Veuillez entrer votre mot de passe :");
         String mdp = Lire.S();
-        Bibliothecaire bib=b.chercherBibliothecaire(num);
-        if(bib!=null){
-            if(bib.getMdp().equals(mdp)){
+        Bibliothecaire bib = b.chercherBibliothecaire(num);
+        if (bib != null) {
+            if (bib.getMdp().equals(mdp)) {
                 System.out.println("Vous etes bien connecté");
-                estConnecte=true;
+                estConnecte = true;
                 menuBib(b, bib);
+            } else {
+                System.out.println("Votre mot de passe est faux est faux");
             }
-            else{
-                System.out.println("Votre mot de passe est faux est faux");  
-            }
-        }
-        else{
+        } else {
             System.out.println("Votre numéro de carte est faux");
         }
     }
-    
-    public static void menuAdh(Bibliotheque b, Adherent adh){
-        int c=0;
-        while(c!=8){
+
+    public static void menuAdh(Bibliotheque b, Adherent adh) {
+        int c = 0;
+        while (c != 8) {
             System.out.println("    1) Chercher des ressources");
             System.out.println("    2) Afficher les ressources empruntées");
             System.out.println("    3) Afficher les ressources réservées");
@@ -197,9 +194,9 @@ public class Main {
             System.out.println("    6) Afficher les ressources");
             System.out.println("    7) Rendrer le ressource");
             System.out.println("    8) Se déconnecter");
-            c =Lire.choix(8);
+            c = Lire.choix(8);
 
-            switch(c){
+            switch (c) {
                 case 1:
                     menuRechercher(b, adh);
                     break;
@@ -223,13 +220,13 @@ public class Main {
                     break;
             }
         }
-        estConnecte=false;
-        
+        estConnecte = false;
+
     }
-    
-    public static void menuBib(Bibliotheque b, Bibliothecaire bib){
-        int c=0;
-        while(c!=8){
+
+    public static void menuBib(Bibliotheque b, Bibliothecaire bib) {
+        int c = 0;
+        while (c != 9) {
             System.out.println("    1) Ajouter des adhérents");
             System.out.println("    2) Ajouter des ressources");
             System.out.println("    3) Supprimer des adhérents");
@@ -237,10 +234,11 @@ public class Main {
             System.out.println("    5) Chercher des ressources");
             System.out.println("    6) Afficher les adhérents");
             System.out.println("    7) Afficher les ressources");
-            System.out.println("    8) Se déconnecter");
-            c =Lire.choix(8);
+            System.out.println("    8) Afficher les reserve");
+            System.out.println("    9) Se déconnecter");
+            c = Lire.choix(9);
 
-            switch(c){
+            switch (c) {
                 case 1:
                     b.ajouterAdherent();
                     break;
@@ -262,9 +260,12 @@ public class Main {
                 case 7:
                     b.afficherRessource();
                     break;
+                case 8:
+                    b.afficherReserve();
+                    break;
             }
         }
-        estConnecte=false;
-        
+        estConnecte = false;
+
     }
 }

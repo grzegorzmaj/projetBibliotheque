@@ -2,6 +2,9 @@ package BiblioPackage;
 
 import java.util.Date;
 import java.text.*;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class Emprunt
@@ -30,21 +33,19 @@ public class Emprunt {
         this.time = new Date();
     }
     
-    public Emprunt(String tit, String aut, String cat, String ref, int num, String dat) { 
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd"); 
-        
+    public Emprunt(String tit, String aut, String cat, String ref, int num, String dat) {
         this.titre = tit;
         this.auteur = aut;
         this.categorie = cat;
         this.reference = ref;
         this.numeroCarte = num;
         
+        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
         try {
-            this.time = ft.parse(dat);
-        } catch (ParseException e) {
-            System.out.println("Unparseable using " + ft);
+            this.time = df.parse(dat);
+        } catch (ParseException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //this.time = new Date();
     }
 
   //

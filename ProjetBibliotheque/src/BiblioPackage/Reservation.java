@@ -1,5 +1,13 @@
 package BiblioPackage;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Class Reservation
  */
@@ -27,15 +35,28 @@ public class Reservation {
         this.time = new Date();
     }
 
+    public Reservation(String tit, String aut, String cat, String ref, int num, String dat){
+        this.titre = tit;
+        this.auteur = aut;
+        this.categorie = cat;
+        this.reference = ref;
+        this.numeroCarte = num;
+        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
+        try {
+            this.time = df.parse(dat);
+        } catch (ParseException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
   //
     // Methods
     //
-    
-    public boolean isValid(){
+    public boolean isValid() {
         return true;
     }
-    
-  //
+
+    //
     // Accessor methods
     //
     public String getTitre() {
@@ -67,9 +88,9 @@ public class Reservation {
     //
     @Override
     public String toString() {
-        return "Titre: " + titre + "\n"
-                + "Auteur: " + auteur + "\n"
-                + "Categorie: " + categorie + "\n"
-                + "Date: " + time.toString();
+        return "Titre: " + this.titre + "\n"
+                + "Auteur: " + this.auteur + "\n"
+                + "Categorie: " + this.categorie + "\n"
+                + "Date: " + this.time.toString();
     }
 }
