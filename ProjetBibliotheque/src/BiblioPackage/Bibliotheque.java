@@ -929,16 +929,16 @@ public class Bibliotheque {
                 if (((r.get(e - 1).getRessource().getNbReserve() >= r.get(e - 1).getRessource().getNbDisponible()) && resDelete!=null)
                         || r.get(e - 1).getRessource().getNbReserve() == 0) {
                     if (r.get(e - 1).getRessource() instanceof Livre && ad.getNbLivre() >= this.max_livre) {
-                        System.out.println("Emprunte impossible. Nombre livres empruntees depasse.");
+                        System.out.println("Emprunt impossible. Nombre livres empruntees depasse.");
                         return false;
                     } else if (r.get(e - 1).getRessource() instanceof Revue && ad.getNbRevue() >= this.max_revue) {
-                        System.out.println("Emprunte impossible. Nombre revues empruntees depasse.");
+                        System.out.println("Emprunt impossible. Nombre revues empruntees depasse.");
                         return false;
                     } else if (r.get(e - 1).getRessource() instanceof CD && ad.getNbCd() >= this.max_cd) {
-                        System.out.println("Emprunte impossible. Nombre cd empruntees depasse.");
+                        System.out.println("Emprunt impossible. Nombre cd empruntees depasse.");
                         return false;
                     } else if (r.get(e - 1).getRessource() instanceof DVD && ad.getNbDVD() >= this.max_dvd) {
-                        System.out.println("Emprunte impossible. Nombre dvd empruntees depasse.");
+                        System.out.println("Emprunt impossible. Nombre dvd empruntees depasse.");
                         return false;
                     } else {
                         r.get(e - 1).getRessource().setNbDisponible(r.get(e - 1).getRessource().getNbDisponible() - 1);
@@ -967,51 +967,51 @@ public class Bibliotheque {
 
     public boolean emprunter(Ressource ress, Adherent ad) {
         if (ress.getNbDisponible() > 0) {
-            if (ress instanceof Livre) {
-                if (ad.getNbLivre() >= this.max_livre) {
-                    System.out.println("Emprunte impossible. Nombre livres empruntees depasse.");
-                    return false;
-                }
-            } else if (ress instanceof Revue) {
-                if (ad.getNbRevue() >= this.max_revue) {
-                    System.out.println("Emprunte impossible. Nombre revues empruntees depasse.");
-                    return false;
-                }
-            } else if (ress instanceof CD) {
-                if (ad.getNbCd() >= this.max_cd) {
-                    System.out.println("Emprunte impossible. Nombre cd empruntees depasse.");
-                    return false;
-                }
-            } else if (ress instanceof DVD) {
-                if (ad.getNbDVD() >= this.max_dvd) {
-                    System.out.println("Emprunte impossible. Nombre dvd empruntees depasse.");
-                    return false;
-                }
-            } else {
-                ress.setNbDisponible(ress.getNbDisponible() - 1);
-                ad.addEmprunte(new Emprunt(ress, ad));
-                return true;
-            }
-        } else {
-            System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire reservation \n 2) Revenir au menu principal \n");
-            int e = Lire.choix(2);
-            switch (e) {
-                case 1:
-                    this.faireReservation(ress, ad);
-                    break;
-                case 2:
-                    break;
-            }
+                    Reservation resDelete = this.isReserved(ress, ad);
+                    if (((ress.getNbReserve() >= ress.getNbDisponible()) && resDelete!=null)
+                            || ress.getNbReserve() == 0) {
+                        if (ress instanceof Livre && ad.getNbLivre() >= this.max_livre) {
+                            System.out.println("Emprunt impossible. Nombre livres empruntees depasse.");
+                            return false;
+                        } else if (ress instanceof Revue && ad.getNbRevue() >= this.max_revue) {
+                            System.out.println("Emprunt impossible. Nombre revues empruntees depasse.");
+                            return false;
+                        } else if (ress instanceof CD && ad.getNbCd() >= this.max_cd) {
+                            System.out.println("Emprunt impossible. Nombre cd empruntees depasse.");
+                            return false;
+                        } else if (ress instanceof DVD && ad.getNbDVD() >= this.max_dvd) {
+                            System.out.println("Emprunt impossible. Nombre dvd empruntees depasse.");
+                            return false;
+                        } else {
+                            ress.setNbDisponible(ress.getNbDisponible() - 1);
+                            ad.addEmprunte(new Emprunt(ress, ad));
+                            if(resDelete!=null){
+                                this.res.remove(resDelete);
+                                ress.setNbReserve(ress.getNbReserve() - 1);
+                            }
+                            return true;
+                        }
+                    }
+                } else {
+                    System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire reservation \n 2) Revenir au menu principal \n");
+                    int e = Lire.choix(2);
+                    switch (e) {
+                        case 1:
+                            this.faireReservation(ress, ad);
+                            break;
+                        case 2:
+                            break;
+                    }
         }
-        return false;
-    }
+            return false;
+        }
 
     public void rendreRessource(Adherent ad) {
         int e = 0;
         int i;
         while (e != 3) {
             System.out.println("Choisi ressource a rendre: \n"
-                    + "1) Entreter titre.\n"
+                    + "1) Entrer le titre.\n"
                     + "2) Afficher tout ressources empruntees.\n"
                     + "3) Revenir au menu principal.");
             e = Lire.choix(3);
@@ -1067,7 +1067,7 @@ public class Bibliotheque {
                                     int nb = this.chercherRessource(ad.getEmprunteList().get(i).getReference()).getNbDisponible();
                                     this.chercherRessource(ad.getEmprunteList().get(i).getReference()).setNbDisponible(nb+1);
                                     ad.removeEmprunte(ad.getEmprunteList().get(i));
-                                    System.out.println("Ressource:\n '" + t + "' rendre");
+                                    System.out.println("Ressource:\n '" + t + "' rendue");
                                     choix = "n";
                                     break;
                                 default:

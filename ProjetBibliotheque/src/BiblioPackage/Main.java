@@ -109,12 +109,12 @@ public class Main {
 
             switch (e) {
                 case 1:
-                    System.out.println("Emprunte ressource numero: (1-" + (r.size() + 1) + ")");
+                    System.out.println("Emprunte ressource numero: (1-" + (r.size()) + ")");
                     ee = Lire.choix(r.size());
                     b.emprunter(r.get(ee - 1).getRessource(), adh);
                     break;
                 case 2:
-                    System.out.println("Reserve ressource numero: (1-" + (r.size() + 1) + ")");
+                    System.out.println("Reserve ressource numero: (1-" + (r.size()) + ")");
                     ee = Lire.choix(r.size());
                     b.faireReservation(r.get(ee - 1).getRessource(), adh);
                     break;
