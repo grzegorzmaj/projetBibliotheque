@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -23,6 +26,9 @@ public class Bibliotheque {
     private final int max_livre = 8;
     private final int max_revue = 4;
     private final int max_reserve = 3;
+    
+    
+    private final DateTimeFormatter df;
 
     private String Nom;
     private ArrayList<Ressource> doc;
@@ -34,6 +40,7 @@ public class Bibliotheque {
     // Constructors
     //
     public Bibliotheque(String nom) {
+        this.df = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
         this.Nom = nom;
         doc = new ArrayList();
         adh = new ArrayList();
@@ -328,7 +335,7 @@ public class Bibliotheque {
                 emp.put("categorie", emprunteList1.getCategorie());
                 emp.put("reference", emprunteList1.getReference());
                 emp.put("numeroCarte", emprunteList1.getNumCarte());
-                emp.put("time", emprunteList1.getDate().getTime().toString());
+                emp.put("time", emprunteList1.getDate().toString(df));
 
                 emprunte.add(emp);
             }
@@ -381,7 +388,7 @@ public class Bibliotheque {
             obj.put("categorie", reserv.getCategorie());
             obj.put("reference", reserv.getReference());
             obj.put("numeroCarte", reserv.getNumCarte());
-            obj.put("time", reserv.getDate().getTime().toString());
+            obj.put("time", reserv.getDate().toString(df));
 
             reserve.add(obj);
         }
@@ -490,10 +497,9 @@ public class Bibliotheque {
         Adherent ad = this.chercherAdherent(numero);
         if (ad != null) {
             if (ad.getEmprunteList().isEmpty()) {
-                for (int i=0; i<this.res.size(); i++){
-                Reservation reserv = this.res.get(i);
+                for (Reservation reserv : this.res) {
                     if (reserv.getNumCarte() == ad.getNumeroCarte()) {
-                        res.remove(reserv);
+                        this.res.remove(reserv);
                     }
                 }
                 this.adh.remove(ad);
@@ -850,6 +856,20 @@ public class Bibliotheque {
         }
         return null;
     }
+    
+     public void checkReservations() {
+        for(int i=0; i<this.res.size();i++){
+            if(this.res.get(i).getDateValide().isBefore(new DateTime())){
+                for (Ressource ress : this.doc) {
+                    if (this.res.get(i).getReference().equals(ress.getReference())) {
+                        ress.setNbReserve(ress.getNbReserve() - 1);
+                    }
+                }
+                this.res.remove(i);
+            }
+        }
+        
+    }
 
     public void annulerReservation(Adherent ad) {
         if (this.res.isEmpty()) {
@@ -901,9 +921,10 @@ public class Bibliotheque {
         afficherResultat(r);
         System.out.println("Reserve ressource numero: (1-" + r.size() + ")");
         int e = Lire.choix(r.size());
-
-        res.add(new Reservation(r.get(e - 1).getRessource(), ad));
+        Reservation nouvelle = new Reservation(r.get(e - 1).getRessource(), ad);
+        res.add(nouvelle);
         r.get(e - 1).getRessource().setNbReserve(r.get(e - 1).getRessource().getNbReserve() + 1);
+        System.out.println("Reservation: \n" + nouvelle.toString());
         return true;
     }
 
@@ -924,6 +945,7 @@ public class Bibliotheque {
     }
 
     public boolean emprunter(Adherent ad) {
+        this.checkReservations();
         ArrayList<Resultat> r = new ArrayList();
         System.out.println("Voulez-vous chercher avec : ");
         System.out.println("    1) des mots cles");
@@ -998,6 +1020,7 @@ public class Bibliotheque {
     }
 
     public boolean emprunter(Ressource ress, Adherent ad) {
+        this.checkReservations();
         if (ress.getNbDisponible() > 0) {
             Reservation resDelete = this.isReserved(ress, ad);
             if (((ress.getNbReserve() >= ress.getNbDisponible()) && resDelete != null)

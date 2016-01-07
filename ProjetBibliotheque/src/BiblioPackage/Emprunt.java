@@ -1,10 +1,8 @@
 package BiblioPackage;
 
-import java.text.*;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Class Emprunt
@@ -14,53 +12,53 @@ public class Emprunt {
     //
     // Fields
     //
+    private final int max_days_emprunte = 30;
+
     private String titre;
     private String auteur;
     private String categorie;
     private String reference;
     private int numeroCarte;
-    private GregorianCalendar time;
+    private DateTime time;
+    private DateTime timeRendre;
+    private final DateTimeFormatter df;
 
     //
     // Constructors
     //
     public Emprunt(Ressource ress, Adherent adh) {
+        this.df = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
         this.titre = ress.getTitre();
         this.auteur = ress.getAuteur();
         this.categorie = ress.getCategorie();
         this.reference = ress.getReference();
         this.numeroCarte = adh.getNumeroCarte();
-        this.time = new GregorianCalendar();
+        this.time = new DateTime();
+        this.timeRendre = this.time.plusDays(this.max_days_emprunte);
     }
-    
+
     public Emprunt(String tit, String aut, String cat, String ref, int num, String dat) {
+        this.df = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
         this.titre = tit;
         this.auteur = aut;
         this.categorie = cat;
         this.reference = ref;
         this.numeroCarte = num;
-        
-        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
-        try {
-            this.time = new GregorianCalendar();
-            this.time.setTime(df.parse(dat));
-        } catch (ParseException ex) {
-            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.time = DateTime.parse(dat, this.df);
+        this.timeRendre = this.time.plusDays(this.max_days_emprunte);
     }
 
-  //
+    //
 // Methods
 //
-    
-    public boolean isCorrect(){
+    public boolean isCorrect() {
         return true;
     }
-    
+
 //
 // Accessor methods
 //
-     public String getTitre() {
+    public String getTitre() {
         return this.titre;
     }
 
@@ -80,8 +78,12 @@ public class Emprunt {
         return this.numeroCarte;
     }
 
-    public GregorianCalendar getDate() {
+    public DateTime getDate() {
         return this.time;
+    }
+    
+    public DateTime getDateRendre() {
+        return this.timeRendre;
     }
 
 //
@@ -92,6 +94,7 @@ public class Emprunt {
         return "Titre: " + titre + "\n"
                 + "Auteur: " + auteur + "\n"
                 + "Categorie: " + categorie + "\n"
-                + "Date: " + this.time.getTime().toString();
+                + "Date d'emprunt: " + this.time.toString(df) + "\n"
+                + "Date a rendre: " + this.timeRendre.toString(df) + "\n";
     }
 }
