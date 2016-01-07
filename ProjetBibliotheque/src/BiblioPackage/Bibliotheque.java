@@ -39,8 +39,7 @@ public class Bibliotheque {
         adh = new ArrayList();
         bibliothecaire = new ArrayList();
         res = new ArrayList();
-        
-        
+
     }
 
     //
@@ -122,7 +121,7 @@ public class Bibliotheque {
                 long ree = (long) adherent.get("nbReserve");
                 int re = (int) (long) ree;
                 System.out.println(re);
-               
+
                 Adherent ad = new Adherent(nom, prenom, adresse, dn, tel, mail, num, mdp, liv, rev, cd, dvd, re);
 
                 if (maxCard < num) {
@@ -191,7 +190,7 @@ public class Bibliotheque {
 
                 String mdp = (String) biblio.get("mdp");
                 System.out.println(mdp);
-               
+
                 this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num, mdp));
                 if (maxCard < num) {
                     maxCard = num;
@@ -236,7 +235,7 @@ public class Bibliotheque {
                 long nTotal = (long) resource.get("nbTotal");
                 int nbTotal = (int) (long) nTotal;
                 System.out.println(nbTotal);
-                
+
                 String type = (String) resource.get("type");
                 System.out.println(type);
 
@@ -283,19 +282,19 @@ public class Bibliotheque {
 
                 String time = (String) adherent.get("time");
                 System.out.println(time);
-                
+
                 this.res.add(new Reservation(titre, auteur, categorie, reference, numeroCarte, time));
 
             }
         } catch (FileNotFoundException e) {
         } catch (IOException | ParseException e) {
         }
-        
-        
-        if(this.bibliothecaire.size()<1)
-            this.bibliothecaire.add(new Bibliothecaire("new","new","", "", 12345, "", -1, "password"));
+
+        if (this.bibliothecaire.size() < 1) {
+            this.bibliothecaire.add(new Bibliothecaire("new", "new", "", "", 12345, "", -1, "password"));
+        }
         Personne.setMinNombre(maxCard);
-        
+
     }
 
     public void finTravail() throws IOException {
@@ -362,15 +361,16 @@ public class Bibliotheque {
             obj.put("nbDisponible", ress.getNbDisponible());
             obj.put("nbReserve", ress.getNbReserve());
             obj.put("nbTotal", ress.getNbTotal());
-            if(ress instanceof Livre)
+            if (ress instanceof Livre) {
                 obj.put("type", "livre");
-            else if(ress instanceof Revue)
+            } else if (ress instanceof Revue) {
                 obj.put("type", "revue");
-            else if(ress instanceof CD)
+            } else if (ress instanceof CD) {
                 obj.put("type", "cd");
-            else if(ress instanceof DVD)
+            } else if (ress instanceof DVD) {
                 obj.put("type", "dvd");
-           
+            }
+
             ressource.add(obj);
         }
 
@@ -422,16 +422,16 @@ public class Bibliotheque {
         System.out.print("- prenom : ");
         String p = Lire.S();
         ArrayList<Adherent> ad = this.chercherAdherent(n, p);
-        String c="o";
-        if(ad.size()!= 0){
+        String c = "o";
+        if (ad.size() != 0) {
             for (Adherent adh1 : ad) {
                 System.out.println("Voici la liste des adherents ayant le meme nom :");
-                System.out.println(adh1.toString()+"\nDate de naissance: " +adh1.getDateNaissance()+"\nAdresse:"+adh1.getAdresse()+"\nMail"+adh1.getMail());
+                System.out.println(adh1.toString() + "\nDate de naissance: " + adh1.getDateNaissance() + "\nAdresse:" + adh1.getAdresse() + "\nMail" + adh1.getMail());
             }
             System.out.println("Voulez-vous en creer un nouveau (o/n) : ");
             c = Lire.S();
         }
-        if(c.equals("o")){
+        if (c.equals("o")) {
             System.out.print("- adresse : ");
             String a = Lire.S();
             System.out.print("- date de naissance : ");
@@ -446,7 +446,7 @@ public class Bibliotheque {
             this.adh.add(new Adherent(n, p, a, dn, tel, am, -1, mdp));
         }
     }
-    
+
     public void ajouterBibliothecaire() {//idée voir si adhérent déjà inscrit
         System.out.println("Veuillez entrer :");
         System.out.print("- nom : ");
@@ -454,16 +454,16 @@ public class Bibliotheque {
         System.out.print("- prenom : ");
         String p = Lire.S();
         ArrayList<Bibliothecaire> bib = this.chercherBibliothecaire(n, p);
-        String c="o";
-        if(bib.size()!= 0){
+        String c = "o";
+        if (bib.size() != 0) {
             for (Bibliothecaire bib1 : bib) {
                 System.out.println("Voici la liste des bibliothecaires ayant le meme nom :");
-                System.out.print(bib1.toString()+"\nDate de naissance: " +bib1.getDateNaissance()+"\nAdresse:"+bib1.getAdresse()+"\nMail"+bib1.getMail());
+                System.out.print(bib1.toString() + "\nDate de naissance: " + bib1.getDateNaissance() + "\nAdresse:" + bib1.getAdresse() + "\nMail" + bib1.getMail());
             }
             System.out.println("Voulez-vous en creer un nouveau (o/n) : ");
             c = Lire.S();
         }
-        if(c.equals("o")){
+        if (c.equals("o")) {
             System.out.print("- adresse : ");
             String a = Lire.S();
             System.out.print("- date de naissance : ");
@@ -482,25 +482,23 @@ public class Bibliotheque {
     /**
      */
     public void supprimerAdherent() {
-        
+
         System.out.print("Veuillez entrer le numero de carte de l'adhrent a supprimer : ");
         int numero = Lire.i();
- 
+
         Adherent ad = this.chercherAdherent(numero);
-        if(ad!= null){
-            if(ad.getEmprunteList().isEmpty()){
+        if (ad != null) {
+            if (ad.getEmprunteList().isEmpty()) {
                 this.adh.remove(ad);
-                System.out.println("L'adherent a bien ete supprime."); 
-            }
-            else{
+                System.out.println("L'adherent a bien ete supprime.");
+            } else {
                 System.out.println("L'adherent a encore des emprunts");
             }
-        }
-        else {
+        } else {
             System.out.println("Le numéro ne correspond pas.");
         }
     }
-    
+
     /**
      */
     public void supprimerBibliothecaire() {
@@ -509,11 +507,10 @@ public class Bibliotheque {
         int numero = Lire.i();
 
         Bibliothecaire bib = this.chercherBibliothecaire(numero);
-        if(bib!=null){
+        if (bib != null) {
             bibliothecaire.remove(bib);
             System.out.println("Le bibliothecaire a bien ete supprime.");
-        } 
-        else {
+        } else {
             System.out.println("Le numéro ne correspond pas.");
         }
     }
@@ -625,10 +622,15 @@ public class Bibliotheque {
         if (this.res.isEmpty()) {
             System.out.println("Rien reserve.");
         } else {
+            int i = 0;
             for (Reservation reserv : this.res) {
                 if (reserv.getNumCarte() == adh.getNumeroCarte()) {
+                    i++;
                     System.out.println(reserv.toString());
                 }
+            }
+            if (i == 0) {
+                System.out.println("Rien reserve.");
             }
         }
     }
@@ -794,8 +796,8 @@ public class Bibliotheque {
         }
         return ad;
     }
-    
-        public ArrayList<Bibliothecaire> chercherBibliothecaire(String nom, String prenom) {
+
+    public ArrayList<Bibliothecaire> chercherBibliothecaire(String nom, String prenom) {
         ArrayList<Bibliothecaire> ad = new ArrayList<Bibliothecaire>();
         for (Bibliothecaire bib1 : bibliothecaire) {
             if (bib1.getNom().equals(nom) && bib1.getPrenom().equals(prenom)) {
@@ -822,20 +824,31 @@ public class Bibliotheque {
         }
         return null;
     }
-    
-    public Reservation isReserved(Ressource ress, Adherent ad){
-        for(Reservation rese : this.res){
-            if(ress.getTitre().equals(rese.getTitre()) && ad.getNumeroCarte()==rese.getNumCarte())
-                return rese;
+
+    public Reservation isReserved(Ressource ress, Adherent ad) {
+        int i = 1;
+        for (Reservation rese : this.res) {
+            if (ress.getTitre().equals(rese.getTitre())) {
+                if (ad.getNumeroCarte() == rese.getNumCarte()) {
+                    if (i == 1) {
+                        return rese;
+                    } else {
+                        System.out.println("Vous etes " + i + "dans la file d'attente.");
+                        return null;
+                    }
+                } else {
+                  i++;  
+                }
+            }
         }
         return null;
     }
-    
-    public void annulerReservation(Adherent ad){
+
+    public void annulerReservation(Adherent ad) {
         if (this.res.isEmpty()) {
             System.out.println("Rien reserve.");
         } else {
-            int i=0;
+            int i = 0;
             ArrayList<Reservation> rese = new ArrayList();
             for (Reservation reserv : this.res) {
                 if (reserv.getNumCarte() == ad.getNumeroCarte()) {
@@ -846,12 +859,13 @@ public class Bibliotheque {
             }
             System.out.print("Choisi reservation a annuler (1-" + i + "):");
             int e = Lire.choix(i);
-            this.res.remove(rese.get(e-1));
-            for(Ressource ress : this.doc){
-                if(rese.get(e-1).getReference().equals(ress.getReference()))
-                    ress.setNbReserve(ress.getNbReserve()-1);
+            this.res.remove(rese.get(e - 1));
+            for (Ressource ress : this.doc) {
+                if (rese.get(e - 1).getReference().equals(ress.getReference())) {
+                    ress.setNbReserve(ress.getNbReserve() - 1);
+                }
             }
-            System.out.println("Reservation: " + rese.get(e-1).toString() + "\n annulle.");
+            System.out.println("Reservation: " + rese.get(e - 1).toString() + "\n annulle.");
         }
     }
 
@@ -878,7 +892,7 @@ public class Bibliotheque {
                 break;
         }
         afficherResultat(r);
-        System.out.println("Reserve ressource numero: (1-" + (r.size() + 1) + ")");
+        System.out.println("Reserve ressource numero: (1-" + r.size() + ")");
         int e = Lire.choix(r.size());
 
         res.add(new Reservation(r.get(e - 1).getRessource(), ad));
@@ -893,11 +907,12 @@ public class Bibliotheque {
         }
         Reservation rese = new Reservation(reserve, ad);
         this.res.add(rese);
-        if(this.res.isEmpty())
+        if (this.res.isEmpty()) {
             System.out.println("dupa");
-        else
+        } else {
             System.out.println("Reservation ete faire.");
-        reserve.setNbReserve(reserve.getNbReserve()+1);
+        }
+        reserve.setNbReserve(reserve.getNbReserve() + 1);
         return true;
     }
 
@@ -926,7 +941,7 @@ public class Bibliotheque {
 
             if (r.get(e - 1).getRessource().getNbDisponible() > 0) {
                 Reservation resDelete = this.isReserved(r.get(e - 1).getRessource(), ad);
-                if (((r.get(e - 1).getRessource().getNbReserve() >= r.get(e - 1).getRessource().getNbDisponible()) && resDelete!=null)
+                if (((r.get(e - 1).getRessource().getNbReserve() >= r.get(e - 1).getRessource().getNbDisponible()) && resDelete != null)
                         || r.get(e - 1).getRessource().getNbReserve() == 0) {
                     if (r.get(e - 1).getRessource() instanceof Livre && ad.getNbLivre() >= this.max_livre) {
                         System.out.println("Emprunt impossible. Nombre livres empruntees depasse.");
@@ -943,11 +958,21 @@ public class Bibliotheque {
                     } else {
                         r.get(e - 1).getRessource().setNbDisponible(r.get(e - 1).getRessource().getNbDisponible() - 1);
                         ad.addEmprunte(new Emprunt(r.get(e - 1).getRessource(), ad));
-                        if(resDelete!=null){
+                        if (resDelete != null) {
                             this.res.remove(resDelete);
                             r.get(e - 1).getRessource().setNbReserve(r.get(e - 1).getRessource().getNbReserve() - 1);
                         }
                         return true;
+                    }
+                } else {
+                    System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire reservation \n 2) Revenir au menu principal \n");
+                    e = Lire.choix(2);
+                    switch (e) {
+                        case 1:
+                            this.faireReservation(r.get(e - 1).getRessource(), ad);
+                            break;
+                        case 2:
+                            break;
                     }
                 }
             } else {
@@ -967,44 +992,44 @@ public class Bibliotheque {
 
     public boolean emprunter(Ressource ress, Adherent ad) {
         if (ress.getNbDisponible() > 0) {
-                    Reservation resDelete = this.isReserved(ress, ad);
-                    if (((ress.getNbReserve() >= ress.getNbDisponible()) && resDelete!=null)
-                            || ress.getNbReserve() == 0) {
-                        if (ress instanceof Livre && ad.getNbLivre() >= this.max_livre) {
-                            System.out.println("Emprunt impossible. Nombre livres empruntees depasse.");
-                            return false;
-                        } else if (ress instanceof Revue && ad.getNbRevue() >= this.max_revue) {
-                            System.out.println("Emprunt impossible. Nombre revues empruntees depasse.");
-                            return false;
-                        } else if (ress instanceof CD && ad.getNbCd() >= this.max_cd) {
-                            System.out.println("Emprunt impossible. Nombre cd empruntees depasse.");
-                            return false;
-                        } else if (ress instanceof DVD && ad.getNbDVD() >= this.max_dvd) {
-                            System.out.println("Emprunt impossible. Nombre dvd empruntees depasse.");
-                            return false;
-                        } else {
-                            ress.setNbDisponible(ress.getNbDisponible() - 1);
-                            ad.addEmprunte(new Emprunt(ress, ad));
-                            if(resDelete!=null){
-                                this.res.remove(resDelete);
-                                ress.setNbReserve(ress.getNbReserve() - 1);
-                            }
-                            return true;
-                        }
-                    }
+            Reservation resDelete = this.isReserved(ress, ad);
+            if (((ress.getNbReserve() >= ress.getNbDisponible()) && resDelete != null)
+                    || ress.getNbReserve() == 0) {
+                if (ress instanceof Livre && ad.getNbLivre() >= this.max_livre) {
+                    System.out.println("Emprunt impossible. Nombre livres empruntees depasse.");
+                    return false;
+                } else if (ress instanceof Revue && ad.getNbRevue() >= this.max_revue) {
+                    System.out.println("Emprunt impossible. Nombre revues empruntees depasse.");
+                    return false;
+                } else if (ress instanceof CD && ad.getNbCd() >= this.max_cd) {
+                    System.out.println("Emprunt impossible. Nombre cd empruntees depasse.");
+                    return false;
+                } else if (ress instanceof DVD && ad.getNbDVD() >= this.max_dvd) {
+                    System.out.println("Emprunt impossible. Nombre dvd empruntees depasse.");
+                    return false;
                 } else {
-                    System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire reservation \n 2) Revenir au menu principal \n");
-                    int e = Lire.choix(2);
-                    switch (e) {
-                        case 1:
-                            this.faireReservation(ress, ad);
-                            break;
-                        case 2:
-                            break;
+                    ress.setNbDisponible(ress.getNbDisponible() - 1);
+                    ad.addEmprunte(new Emprunt(ress, ad));
+                    if (resDelete != null) {
+                        this.res.remove(resDelete);
+                        ress.setNbReserve(ress.getNbReserve() - 1);
                     }
+                    return true;
+                }
+            }
+        } else {
+            System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire reservation \n 2) Revenir au menu principal \n");
+            int e = Lire.choix(2);
+            switch (e) {
+                case 1:
+                    this.faireReservation(ress, ad);
+                    break;
+                case 2:
+                    break;
+            }
         }
-            return false;
-        }
+        return false;
+    }
 
     public void rendreRessource(Adherent ad) {
         int e = 0;
@@ -1057,7 +1082,7 @@ public class Bibliotheque {
                         System.out.println("Rien a rendre.");
                     } else {
                         System.out.println("Choisi ressource a rendre 1-" + nombre + ": \n");
-                        i = Lire.choix(nombre)-1;
+                        i = Lire.choix(nombre) - 1;
                         System.out.println("Vous voulez rendre: \n" + ad.getEmprunteList().get(i).toString() + "\n ? (y/n)");
                         String choix = Lire.S();
                         while (!choix.equals("n")) {
@@ -1065,7 +1090,7 @@ public class Bibliotheque {
                                 case "y":
                                     String t = ad.getEmprunteList().get(i).getTitre();
                                     int nb = this.chercherRessource(ad.getEmprunteList().get(i).getReference()).getNbDisponible();
-                                    this.chercherRessource(ad.getEmprunteList().get(i).getReference()).setNbDisponible(nb+1);
+                                    this.chercherRessource(ad.getEmprunteList().get(i).getReference()).setNbDisponible(nb + 1);
                                     ad.removeEmprunte(ad.getEmprunteList().get(i));
                                     System.out.println("Ressource:\n '" + t + "' rendue");
                                     choix = "n";
