@@ -56,7 +56,7 @@ public class Personne {
      *
      * @return the value of nombre
      */
-    public int getNombre() {
+    static public int getNombre() {
         return nombre;
     }
 
@@ -203,6 +203,7 @@ public class Personne {
     public String getMdp() {
         return motDePasse;
     }
+    
   //
     // Other methods
     //
