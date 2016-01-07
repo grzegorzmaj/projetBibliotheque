@@ -1,6 +1,4 @@
  - cheking out reservation valability
- - removing from reservation list ressources empruntes
- - checking if ressource disponible but reserved
  - adding bibliothecaire?
  - checking out duration of emprunt
  - removing reservstion when remove adherent
