@@ -185,7 +185,7 @@ public class Main {
 
     public static void menuAdh(Bibliotheque b, Adherent adh) {
         int c = 0;
-        while (c != 8) {
+        while (c != 9) {
             System.out.println("    1) Chercher des ressources");
             System.out.println("    2) Afficher les ressources empruntées");
             System.out.println("    3) Afficher les ressources réservées");
@@ -193,8 +193,9 @@ public class Main {
             System.out.println("    5) Réserver une ressource");
             System.out.println("    6) Afficher les ressources");
             System.out.println("    7) Rendrer le ressource");
-            System.out.println("    8) Se déconnecter");
-            c = Lire.choix(8);
+            System.out.println("    8) Annuler reservation");
+            System.out.println("    9) Se déconnecter");
+            c = Lire.choix(9);
 
             switch (c) {
                 case 1:
@@ -217,6 +218,9 @@ public class Main {
                     break;
                 case 7:
                     b.rendreRessource(adh);
+                    break;
+                case 8:
+                    b.annulerReservation(adh);
                     break;
             }
         }

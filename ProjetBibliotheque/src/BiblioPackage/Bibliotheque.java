@@ -757,6 +757,30 @@ public class Bibliotheque {
         }
         return null;
     }
+    
+    public void annulerReservation(Adherent ad){
+        if (this.res.isEmpty()) {
+            System.out.println("Rien reserve.");
+        } else {
+            int i=0;
+            ArrayList<Reservation> rese = new ArrayList();
+            for (Reservation reserv : this.res) {
+                if (reserv.getNumCarte() == ad.getNumeroCarte()) {
+                    i++;
+                    rese.add(reserv);
+                    System.out.println(i + ") " + reserv.toString());
+                }
+            }
+            System.out.print("Choisi reservation a annuler (1-" + i + "):");
+            int e = Lire.choix(i);
+            this.res.remove(rese.get(e-1));
+            for(Ressource ress : this.doc){
+                if(rese.get(e-1).getReference().equals(ress.getReference()))
+                    ress.setNbReserve(ress.getNbReserve()-1);
+            }
+            System.out.println("Reservation: " + rese.get(e-1).toString() + "\n annulle.");
+        }
+    }
 
     public boolean faireReservation(Adherent ad) {
         if (ad.getNbReserve() > max_reserve) {
