@@ -12,7 +12,7 @@ public class Emprunt {
     //
     // Fields
     //
-    private final int max_days_emprunte = 30;
+    private final int max_days_emprunte = -1;
 
     private String titre;
     private String auteur;

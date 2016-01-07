@@ -1,12 +1,6 @@
 package BiblioPackage;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -19,7 +13,7 @@ public class Reservation {
     //
     // Fields
     //
-    private final int max_days_reserve = -1;
+    private final int max_days_reserve = 7;
     
     private String titre;
     private String auteur;

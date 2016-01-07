@@ -1,6 +1,7 @@
 package BiblioPackage;
 
 import java.util.*;
+import org.joda.time.DateTime;
 
 /**
  * Class Adherent
@@ -17,6 +18,7 @@ public class Adherent extends Personne {
     private int nbRevue = 0;
     private int nbDVD = 0;
     private int nbReserve = 0;
+    private boolean retard = false;
 
   //
     // Constructors
@@ -131,6 +133,14 @@ public class Adherent extends Personne {
     public int getNbReserve() {
         return this.nbReserve;
     }
+    
+    public boolean getRetard(){
+        return this.retard;
+    }
+    
+    public void setRetard(boolean r){
+        this.retard = r;
+    }
 
   //
     // Other methods
@@ -174,6 +184,19 @@ public class Adherent extends Personne {
             }
         }
         return nombre;
+    }
+    
+    public boolean isRetard() {
+        if (!this.emprunteList.isEmpty()) {
+            for (Emprunt emp : this.emprunteList) {
+                if (emp.getDateRendre().isBefore(new DateTime())) {
+                    this.retard = true;
+                    return this.retard;
+                }
+            }
+        }
+        this.retard = false;
+        return this.retard;
     }
 
 }
