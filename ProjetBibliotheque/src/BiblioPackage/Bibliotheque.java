@@ -482,20 +482,21 @@ public class Bibliotheque {
     /**
      */
     public void supprimerAdherent() {
-        boolean supprime = false;
-
+        
         System.out.print("Veuillez entrer le numero de carte de l'adhrent a supprimer : ");
         int numero = Lire.i();
-
-        for (int i = 0; i < this.adh.size(); i++) {
-            if (numero == this.adh.get(i).getNumeroCarte()) {
-                this.adh.remove(i);
-                supprime = true;
+ 
+        Adherent ad = this.chercherAdherent(numero);
+        if(ad!= null){
+            if(ad.getEmprunteList().isEmpty()){
+                this.adh.remove(ad);
+                System.out.println("L'adherent a bien ete supprime."); 
+            }
+            else{
+                System.out.println("L'adherent a encore des emprunts");
             }
         }
-        if (supprime) {
-            System.out.println("L'adherent a bien ete supprime.");
-        } else {
+        else {
             System.out.println("Le numéro ne correspond pas.");
         }
     }
@@ -503,20 +504,16 @@ public class Bibliotheque {
     /**
      */
     public void supprimerBibliothecaire() {
-        boolean supprime = false;
 
         System.out.print("Veuillez entrer le numero de carte du bibliothecaire a supprimer : ");
         int numero = Lire.i();
 
-        for (int i = 0; i < this.bibliothecaire.size(); i++) {
-            if (numero == this.bibliothecaire.get(i).getNumeroCarte()) {
-                this.bibliothecaire.remove(i);
-                supprime = true;
-            }
-        }
-        if (supprime) {
+        Bibliothecaire bib = this.chercherBibliothecaire(numero);
+        if(bib!=null){
+            bibliothecaire.remove(bib);
             System.out.println("Le bibliothecaire a bien ete supprime.");
-        } else {
+        } 
+        else {
             System.out.println("Le numéro ne correspond pas.");
         }
     }
