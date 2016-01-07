@@ -1,7 +1,7 @@
 package BiblioPackage;
 
-import java.util.Date;
 import java.text.*;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +19,7 @@ public class Emprunt {
     private String categorie;
     private String reference;
     private int numeroCarte;
-    private Date time;
+    private GregorianCalendar time;
 
     //
     // Constructors
@@ -30,7 +30,7 @@ public class Emprunt {
         this.categorie = ress.getCategorie();
         this.reference = ress.getReference();
         this.numeroCarte = adh.getNumeroCarte();
-        this.time = new Date();
+        this.time = new GregorianCalendar();
     }
     
     public Emprunt(String tit, String aut, String cat, String ref, int num, String dat) {
@@ -42,7 +42,8 @@ public class Emprunt {
         
         DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
         try {
-            this.time = df.parse(dat);
+            this.time = new GregorianCalendar();
+            this.time.setTime(df.parse(dat));
         } catch (ParseException ex) {
             Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -79,7 +80,7 @@ public class Emprunt {
         return this.numeroCarte;
     }
 
-    public Date getDate() {
+    public GregorianCalendar getDate() {
         return this.time;
     }
 
@@ -91,6 +92,6 @@ public class Emprunt {
         return "Titre: " + titre + "\n"
                 + "Auteur: " + auteur + "\n"
                 + "Categorie: " + categorie + "\n"
-                + "Date: " + time.toString();
+                + "Date: " + this.time.getTime().toString();
     }
 }

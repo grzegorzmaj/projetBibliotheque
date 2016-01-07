@@ -328,7 +328,7 @@ public class Bibliotheque {
                 emp.put("categorie", emprunteList1.getCategorie());
                 emp.put("reference", emprunteList1.getReference());
                 emp.put("numeroCarte", emprunteList1.getNumCarte());
-                emp.put("time", emprunteList1.getDate().toString());
+                emp.put("time", emprunteList1.getDate().getTime().toString());
 
                 emprunte.add(emp);
             }
@@ -381,7 +381,7 @@ public class Bibliotheque {
             obj.put("categorie", reserv.getCategorie());
             obj.put("reference", reserv.getReference());
             obj.put("numeroCarte", reserv.getNumCarte());
-            obj.put("time", reserv.getDate().toString());
+            obj.put("time", reserv.getDate().getTime().toString());
 
             reserve.add(obj);
         }
@@ -942,7 +942,7 @@ public class Bibliotheque {
             if (r.get(e - 1).getRessource().getNbDisponible() > 0) {
                 Reservation resDelete = this.isReserved(r.get(e - 1).getRessource(), ad);
                 if (((r.get(e - 1).getRessource().getNbReserve() >= r.get(e - 1).getRessource().getNbDisponible()) && resDelete != null)
-                        || r.get(e - 1).getRessource().getNbReserve() == 0) {
+                        || (r.get(e - 1).getRessource().getNbReserve() < r.get(e - 1).getRessource().getNbDisponible())) {
                     if (r.get(e - 1).getRessource() instanceof Livre && ad.getNbLivre() >= this.max_livre) {
                         System.out.println("Emprunt impossible. Nombre livres empruntees depasse.");
                         return false;
@@ -994,7 +994,7 @@ public class Bibliotheque {
         if (ress.getNbDisponible() > 0) {
             Reservation resDelete = this.isReserved(ress, ad);
             if (((ress.getNbReserve() >= ress.getNbDisponible()) && resDelete != null)
-                    || ress.getNbReserve() == 0) {
+                    || (ress.getNbReserve() < ress.getNbDisponible())) {
                 if (ress instanceof Livre && ad.getNbLivre() >= this.max_livre) {
                     System.out.println("Emprunt impossible. Nombre livres empruntees depasse.");
                     return false;
