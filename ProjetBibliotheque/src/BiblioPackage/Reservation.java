@@ -7,6 +7,9 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Class Reservation
@@ -16,41 +19,44 @@ public class Reservation {
     //
     // Fields
     //
+    private final int max_days_reserve = -1;
+    
     private String titre;
     private String auteur;
     private String categorie;
     private String reference;
     private int numeroCarte;
-    private GregorianCalendar time;
+    private DateTime time;
+    private DateTime timeValide;
+    private final DateTimeFormatter df;
 
     //
     // Constructors
     //
+
     public Reservation(Ressource ress, Adherent adh) {
+        this.df = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
         this.titre = ress.getTitre();
         this.auteur = ress.getAuteur();
         this.categorie = ress.getCategorie();
         this.reference = ress.getReference();
         this.numeroCarte = adh.getNumeroCarte();
-        this.time = new GregorianCalendar();
+        this.time = new DateTime();
+        this.timeValide = this.time.plusDays(this.max_days_reserve);
     }
 
-    public Reservation(String tit, String aut, String cat, String ref, int num, String dat){
+    public Reservation(String tit, String aut, String cat, String ref, int num, String dat) {
+        this.df = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
         this.titre = tit;
         this.auteur = aut;
         this.categorie = cat;
         this.reference = ref;
         this.numeroCarte = num;
-        DateFormat df = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH);
-        try {
-            this.time = new GregorianCalendar();
-            this.time.setTime(df.parse(dat));
-        } catch (ParseException ex) {
-            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.time = DateTime.parse(dat, this.df);
+        this.timeValide = this.time.plusDays(this.max_days_reserve);
     }
 
-  //
+    //
     // Methods
     //
     public boolean isValid() {
@@ -80,8 +86,12 @@ public class Reservation {
         return this.numeroCarte;
     }
 
-    public GregorianCalendar getDate() {
+    public DateTime getDate() {
         return this.time;
+    }
+    
+    public DateTime getDateValide() {
+        return this.timeValide;
     }
 
     //
@@ -92,6 +102,7 @@ public class Reservation {
         return "Titre: " + this.titre + "\n"
                 + "Auteur: " + this.auteur + "\n"
                 + "Categorie: " + this.categorie + "\n"
-                + "Date: " + this.time.getTime().toString();
+                + "Date de reservation: " + this.time.toString(df) +"\n"
+                + "Date valide de reservation: " + this.timeValide.toString(df) +"\n";
     }
 }
