@@ -226,41 +226,49 @@ public class Main {
 
     public static void menuBib(Bibliotheque b, Bibliothecaire bib) {
         int c = 0;
-        while (c != 9) {
-            System.out.println("    1) Ajouter des adhérents");
-            System.out.println("    2) Ajouter des ressources");
-            System.out.println("    3) Supprimer des adhérents");
-            System.out.println("    4) Supprimer des ressources");
-            System.out.println("    5) Chercher des ressources");
-            System.out.println("    6) Afficher les adhérents");
-            System.out.println("    7) Afficher les ressources");
-            System.out.println("    8) Afficher les reserve");
-            System.out.println("    9) Se déconnecter");
-            c = Lire.choix(9);
+        while (c != 11) {
+            System.out.println("    1) Ajouter un adhérent");
+            System.out.println("    2) Ajouter un bibliothécaire");
+            System.out.println("    3) Ajouter une ressource");
+            System.out.println("    4) Supprimer un bibliothécaire");
+            System.out.println("    5) Supprimer un adhérent");
+            System.out.println("    6) Supprimer une ressource");
+            System.out.println("    7) Chercher des ressources");
+            System.out.println("    8) Afficher les adhérents");
+            System.out.println("    9) Afficher les ressources");
+            System.out.println("    10) Afficher les reserve");
+            System.out.println("    11) Se déconnecter");
+            c = Lire.choix(11);
 
             switch (c) {
                 case 1:
                     b.ajouterAdherent();
                     break;
                 case 2:
-                    b.ajouterRessource();
+                    b.ajouterBibliothecaire();
                     break;
                 case 3:
-                    b.supprimerAdherent();
+                    b.ajouterRessource();
                     break;
                 case 4:
-                    b.supprimerRessource();
+                    b.supprimerBibliothecaire();
                     break;
                 case 5:
-                    menuRechercher(b);
+                    b.supprimerAdherent();
                     break;
                 case 6:
-                    b.afficherAdherent();
+                    b.supprimerRessource();
                     break;
                 case 7:
-                    b.afficherRessource();
+                    menuRechercher(b);
                     break;
                 case 8:
+                    b.afficherAdherent();
+                    break;
+                case 9:
+                    b.afficherRessource();
+                    break;
+                case 10:
                     b.afficherReserve();
                     break;
             }

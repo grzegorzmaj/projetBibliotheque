@@ -415,24 +415,68 @@ public class Bibliotheque {
      */
     /**
      */
-    public void ajouterAdherent() {//idée voir si adhérent déjà inscrit
+    public void ajouterAdherent() {
         System.out.println("Veuillez entrer :");
         System.out.print("- nom : ");
         String n = Lire.S();
         System.out.print("- prenom : ");
         String p = Lire.S();
-        System.out.print("- adresse : ");
-        String a = Lire.S();
-        System.out.print("- date de naissance : ");
-        String dn = Lire.S();
-        System.out.print("- telephone : ");
-        int tel = Lire.i();
-        System.out.print("- adresse email : ");
-        String am = Lire.S();
-        System.out.print("- mot de passe : ");
-        String mdp = Lire.S();
+        ArrayList<Adherent> ad = this.chercherAdherent(n, p);
+        String c="o";
+        if(ad.size()!= 0){
+            for (Adherent adh1 : ad) {
+                System.out.println("Voici la liste des adherents ayant le meme nom :");
+                System.out.println(adh1.toString()+"\nDate de naissance: " +adh1.getDateNaissance()+"\nAdresse:"+adh1.getAdresse()+"\nMail"+adh1.getMail());
+            }
+            System.out.println("Voulez-vous en creer un nouveau (o/n) : ");
+            c = Lire.S();
+        }
+        if(c.equals("o")){
+            System.out.print("- adresse : ");
+            String a = Lire.S();
+            System.out.print("- date de naissance : ");
+            String dn = Lire.S();
+            System.out.print("- telephone : ");
+            int tel = Lire.i();
+            System.out.print("- adresse email : ");
+            String am = Lire.S();
+            System.out.print("- mot de passe : ");
+            String mdp = Lire.S();
 
-        this.adh.add(new Adherent(n, p, a, dn, tel, am, -1, mdp));
+            this.adh.add(new Adherent(n, p, a, dn, tel, am, -1, mdp));
+        }
+    }
+    
+    public void ajouterBibliothecaire() {//idée voir si adhérent déjà inscrit
+        System.out.println("Veuillez entrer :");
+        System.out.print("- nom : ");
+        String n = Lire.S();
+        System.out.print("- prenom : ");
+        String p = Lire.S();
+        ArrayList<Bibliothecaire> bib = this.chercherBibliothecaire(n, p);
+        String c="o";
+        if(bib.size()!= 0){
+            for (Bibliothecaire bib1 : bib) {
+                System.out.println("Voici la liste des bibliothecaires ayant le meme nom :");
+                System.out.print(bib1.toString()+"\nDate de naissance: " +bib1.getDateNaissance()+"\nAdresse:"+bib1.getAdresse()+"\nMail"+bib1.getMail());
+            }
+            System.out.println("Voulez-vous en creer un nouveau (o/n) : ");
+            c = Lire.S();
+        }
+        if(c.equals("o")){
+            System.out.print("- adresse : ");
+            String a = Lire.S();
+            System.out.print("- date de naissance : ");
+            String dn = Lire.S();
+            System.out.print("- telephone : ");
+            int tel = Lire.i();
+            System.out.print("- adresse email : ");
+            String am = Lire.S();
+            System.out.print("- mot de passe : ");
+            String mdp = Lire.S();
+
+            this.bibliothecaire.add(new Bibliothecaire(n, p, a, dn, tel, am, -1, mdp));
+        }
     }
 
     /**
@@ -451,6 +495,27 @@ public class Bibliotheque {
         }
         if (supprime) {
             System.out.println("L'adherent a bien ete supprime.");
+        } else {
+            System.out.println("Le numéro ne correspond pas.");
+        }
+    }
+    
+    /**
+     */
+    public void supprimerBibliothecaire() {
+        boolean supprime = false;
+
+        System.out.print("Veuillez entrer le numero de carte du bibliothecaire a supprimer : ");
+        int numero = Lire.i();
+
+        for (int i = 0; i < this.bibliothecaire.size(); i++) {
+            if (numero == this.bibliothecaire.get(i).getNumeroCarte()) {
+                this.bibliothecaire.remove(i);
+                supprime = true;
+            }
+        }
+        if (supprime) {
+            System.out.println("Le bibliothecaire a bien ete supprime.");
         } else {
             System.out.println("Le numéro ne correspond pas.");
         }
@@ -723,13 +788,24 @@ public class Bibliotheque {
         return null;
     }
 
-    public Adherent chercherAdherent(String nom, String prenom) {
+    public ArrayList<Adherent> chercherAdherent(String nom, String prenom) {
+        ArrayList<Adherent> ad = new ArrayList<Adherent>();
         for (Adherent adh1 : adh) {
             if (adh1.getNom().equals(nom) && adh1.getPrenom().equals(prenom)) {
-                return adh1;
+                ad.add(adh1);
             }
         }
-        return null;
+        return ad;
+    }
+    
+        public ArrayList<Bibliothecaire> chercherBibliothecaire(String nom, String prenom) {
+        ArrayList<Bibliothecaire> ad = new ArrayList<Bibliothecaire>();
+        for (Bibliothecaire bib1 : bibliothecaire) {
+            if (bib1.getNom().equals(nom) && bib1.getPrenom().equals(prenom)) {
+                ad.add(bib1);
+            }
+        }
+        return ad;
     }
 
     public Adherent chercherAdherent(int num) {
