@@ -426,7 +426,7 @@ public class Bibliotheque {
         if (ad.size() != 0) {
             for (Adherent adh1 : ad) {
                 System.out.println("Voici la liste des adherents ayant le meme nom :");
-                System.out.println(adh1.toString() + "\nDate de naissance: " + adh1.getDateNaissance() + "\nAdresse:" + adh1.getAdresse() + "\nMail" + adh1.getMail());
+                System.out.println(adh1.toString() + "\nDate de naissance: " + adh1.getDateNaissance() + "\nAdresse: " + adh1.getAdresse() + "\nMail: " + adh1.getMail());
             }
             System.out.println("Voulez-vous en creer un nouveau (o/n) : ");
             c = Lire.S();
@@ -444,6 +444,7 @@ public class Bibliotheque {
             String mdp = Lire.S();
 
             this.adh.add(new Adherent(n, p, a, dn, tel, am, -1, mdp));
+            System.out.println("L'adhérent a bien été ajouté, il a pour numéro : "+Adherent.getNombre());
         }
     }
 
@@ -463,7 +464,7 @@ public class Bibliotheque {
             System.out.println("Voulez-vous en creer un nouveau (o/n) : ");
             c = Lire.S();
         }
-        if (c.equals("o")) {
+        if (c.equalsIgnoreCase("o")) {
             System.out.print("- adresse : ");
             String a = Lire.S();
             System.out.print("- date de naissance : ");
@@ -483,12 +484,18 @@ public class Bibliotheque {
      */
     public void supprimerAdherent() {
 
-        System.out.print("Veuillez entrer le numero de carte de l'adhrent a supprimer : ");
+        System.out.print("Veuillez entrer le numero de carte de l'adherent a supprimer : ");
         int numero = Lire.i();
 
         Adherent ad = this.chercherAdherent(numero);
         if (ad != null) {
             if (ad.getEmprunteList().isEmpty()) {
+                for (int i=0; i<this.res.size(); i++){
+                Reservation reserv = this.res.get(i);
+                    if (reserv.getNumCarte() == ad.getNumeroCarte()) {
+                        res.remove(reserv);
+                    }
+                }
                 this.adh.remove(ad);
                 System.out.println("L'adherent a bien ete supprime.");
             } else {
@@ -696,16 +703,16 @@ public class Bibliotheque {
 
         for (int j = 0; j < this.doc.size(); j++) {
             Ressource d = this.doc.get(j);
-            if (d.getTitre().equals(t) && !t.equals("")) {
+            if (d.getTitre().equalsIgnoreCase(t) && !t.equals("")) {
                 this.ajouterResultat(resultats, d);
             }
-            if (d.getAuteur().equals(aut) && !aut.equals("")) {
+            if (d.getAuteur().equalsIgnoreCase(aut) && !aut.equals("")) {
                 this.ajouterResultat(resultats, d);
             }
-            if (d.getCategorie().equals(cat) && !cat.equals("")) {
+            if (d.getCategorie().equalsIgnoreCase(cat) && !cat.equals("")) {
                 this.ajouterResultat(resultats, d);
             }
-            if (d.getNationalite().equals(nation) && !nation.equals("")) {
+            if (d.getNationalite().equalsIgnoreCase(nation) && !nation.equals("")) {
                 this.ajouterResultat(resultats, d);
             }
             if (d.getDescription().contains(desc) && !desc.equals("")) {
@@ -754,7 +761,7 @@ public class Bibliotheque {
      */
     public Ressource chercherRessource(String titre, String auteur) {
         for (Ressource doc1 : this.doc) {
-            if (doc1.getTitre().equals(titre) && doc1.getAuteur().equals(auteur)) {
+            if (doc1.getTitre().equalsIgnoreCase(titre) && doc1.getAuteur().equalsIgnoreCase(auteur)) {
                 return doc1;
             }
         }
@@ -790,7 +797,7 @@ public class Bibliotheque {
     public ArrayList<Adherent> chercherAdherent(String nom, String prenom) {
         ArrayList<Adherent> ad = new ArrayList<Adherent>();
         for (Adherent adh1 : adh) {
-            if (adh1.getNom().equals(nom) && adh1.getPrenom().equals(prenom)) {
+            if (adh1.getNom().equalsIgnoreCase(nom) && adh1.getPrenom().equalsIgnoreCase(prenom)) {
                 ad.add(adh1);
             }
         }
@@ -800,7 +807,7 @@ public class Bibliotheque {
     public ArrayList<Bibliothecaire> chercherBibliothecaire(String nom, String prenom) {
         ArrayList<Bibliothecaire> ad = new ArrayList<Bibliothecaire>();
         for (Bibliothecaire bib1 : bibliothecaire) {
-            if (bib1.getNom().equals(nom) && bib1.getPrenom().equals(prenom)) {
+            if (bib1.getNom().equalsIgnoreCase(nom) && bib1.getPrenom().equalsIgnoreCase(prenom)) {
                 ad.add(bib1);
             }
         }
@@ -910,7 +917,7 @@ public class Bibliotheque {
         if (this.res.isEmpty()) {
             System.out.println("dupa");
         } else {
-            System.out.println("Reservation ete faire.");
+            System.out.println("La reservation a ete faite.");
         }
         reserve.setNbReserve(reserve.getNbReserve() + 1);
         return true;
@@ -1035,9 +1042,9 @@ public class Bibliotheque {
         int e = 0;
         int i;
         while (e != 3) {
-            System.out.println("Choisi ressource a rendre: \n"
-                    + "1) Entrer le titre.\n"
-                    + "2) Afficher tout ressources empruntees.\n"
+            System.out.println("Choisir les ressources a rendre: \n"
+                    + "1) Entrez le titre.\n"
+                    + "2) Affichez tout les ressources empruntees.\n"
                     + "3) Revenir au menu principal.");
             e = Lire.choix(3);
             switch (e) {
@@ -1057,7 +1064,7 @@ public class Bibliotheque {
                                             int nb = this.chercherRessource(ad.getEmprunteList().get(i).getReference()).getNbDisponible();
                                             this.chercherRessource(ad.getEmprunteList().get(i).getReference()).setNbDisponible(nb + 1);
                                             ad.removeEmprunte(ad.getEmprunteList().get(i));
-                                            System.out.println("Ressource:\n '" + t + "' rendre");
+                                            System.out.println("Ressource:\n '" + t + "' rendue");
                                             choix = "n";
                                             break;
                                         default:

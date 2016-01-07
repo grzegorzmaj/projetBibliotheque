@@ -192,8 +192,8 @@ public class Main {
             System.out.println("    4) Emprunter une ressource");
             System.out.println("    5) Réserver une ressource");
             System.out.println("    6) Afficher les ressources");
-            System.out.println("    7) Rendrer le ressource");
-            System.out.println("    8) Annuler reservation");
+            System.out.println("    7) Rendre des ressources");
+            System.out.println("    8) Annuler des reservations");
             System.out.println("    9) Se déconnecter");
             c = Lire.choix(9);
 
