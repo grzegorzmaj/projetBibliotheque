@@ -132,16 +132,46 @@
 	
 	
 	Le processus de vérification est inclus dans le fichier ....
+	
 	\section{Façon de travail}
 		\subsection{Partage de travail}
+		Yann:
+		\begin{itemize}
+			\item diagramme de classes,
+			\item diagramme de cas d'utilisation,
+			\item classe Ressource + classes filles,
+			\item classe Bibliothèque,
+			\begin{itemize}
+				\item tous les méthodes de recherche,
+				\item gestion des comptes d'adhérents et de bibliothécaires,
+				\item menu pour utilisateur,
+			\end{itemize}
+			\item compte rendu.
+		\end{itemize}
+		
+		
+		Grzgorz:
+		\begin{itemize}
+			\item diagramme de classes,
+			\item classe Personne + classes filles,
+			\item classe Emprunt et classe Réservation,
+			\item classe Bibliothèque,
+			\begin{itemize}
+				\item gestion des réservations,
+				\item gestion des emprunts,
+				\item enregistre des données et lire de fichiers (JSON),
+			\end{itemize}
+			\item compte rendu.
+		\end{itemize}
 		
 		
 		\subsection{Logiciel de gestion de version}
-		Pendant le travail on a gardé tous les fichier sur na serveur GitHub avec utilisation du systeme 
+		Pendant le travail on a gardé tous les fichier sur na serveur GitHub avec utilisation du système 
 		Git.
 		
 		\subsection{Les problèmes}
-		
+		Il y avait problèmes avec gestion de date simple et stable. Le soutiens pour la date dans le Java 
+		n'est pas bon. La solution est utilise JodaTime qui est très connu et utilise dans Java.
 		
 	
 
