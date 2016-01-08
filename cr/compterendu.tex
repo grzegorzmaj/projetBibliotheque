@@ -8,11 +8,15 @@
 \usepackage[a4paper, left=2.5cm, right=2.5cm, top=2.0cm, bottom=2.0cm, headsep=1.0cm]{geometry}
 \usepackage{subfigure}
 \usepackage{epstopdf}
+\usepackage{rotating}
+\usepackage{wrapfig}
 
 \setcounter{totalnumber}{5}
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\bottomfraction}{0.9}
 \newcommand{\linia}{\rule{\linewidth}{0.4mm}}
+
+\renewcommand{\floatpagefraction}{0.7}
 
 \newtheorem{mydef}{Definition}
 
@@ -75,34 +79,60 @@
     
      \section{La conception}
      
-	     \subsection{Diagramme UML}
-	     
-	     \begin{figure}[h]
-			\begin{center}
-				\includegraphics[width=1\textwidth]{graphics/class.eps}
-				\caption{Diagramme UML de classes.}
-			\end{center}
-		\end{figure}
+	     \subsection{Diagramme de classes}
+		\begin{figure}[ht]
+
+	    \centering
+	    		\includegraphics[width=0.7\textwidth]{graphics/class90.eps}
+	    		\caption{Diagramme de classes}
+	    		\label{fig:label}
+	    	\end{figure}
+	    	\newpage
      
-    		 \subsection{Cas d'utilisation}
+    		 \subsection{Diagramme de cas d'utilisation}
     		 
     		 \begin{figure}[h]
 			\begin{center}
 				\includegraphics[width=1\textwidth]{graphics/usecasediagram.eps}
-				\caption{Diagramme cas d'utilisation.}
+				\caption{Diagramme de cas d'utilisation.}
 			\end{center}
 		\end{figure}
 	
 	\section{Implémentation}
+	Le logiciel est implémente dans la langue Java.
+	Lire
+	JSON
+	JodaTime
 	
 	\section{Les tests}
-	
+	Pendant les tests on a dû vérifier:
+	\begin{enumerate}
+		\item ajouter adhérent
+		\item supprimer adhérent
+		\item ajouter bibliothécaire
+		\item supprimer bibliothécaire
+		\item emprunter
+		\begin{itemize}
+			\item limites d'emprunt
+			\item durée d'emprunt
+		\end{itemize}
+		\item rendre
+		\item réservation
+		\begin{itemize}
+			\item limites de réservation
+			\item durée de réservation
+			\item annuler de réservation
+		\end{itemize}
+		\item la recherche de ressources 
+	\end{enumerate}
+	Le processus de vérification est inclus dans le fichier ....
 	\section{Façon de travail}
 		\subsection{Partage de travail}
 		
 		
 		\subsection{Logiciel de gestion de version}
-		Git et serveur GitHub		
+		Pendant le travail on a gardé tous les fichier sur na serveur GitHub avec utilisation du systeme 
+		Git.
 		
 		\subsection{Les problèmes}
 		
