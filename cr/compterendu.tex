@@ -81,7 +81,6 @@
      
 	     \subsection{Diagramme de classes}
 		\begin{figure}[ht]
-
 	    \centering
 	    		\includegraphics[width=0.7\textwidth]{graphics/class90.eps}
 	    		\caption{Diagramme de classes}
@@ -99,10 +98,15 @@
 		\end{figure}
 	
 	\section{Implémentation}
-	Le logiciel est implémente dans la langue Java.
-	Lire
-	JSON
-	JodaTime
+	Le logiciel est implémente dans la langue Java. Pour lire le commandes d'utilisateur on a utilise 
+	la classe \testttt{Lire}.
+	
+	Le projet de mediatheque nécessite utiliser base de données ou enregistrer le données dans le fichier.
+	On a considéré utilisation format XML ou JSON. On a choisi de JSON, parce que c'est plus léger et 
+	simple que XML. Comme un parser on a choisi JSON.simple.
+	
+	Faire les emprunts et les réservations a besoin d'utiliser certain format de la date. On a utiliser 
+	JodaTime qui est nouveau standard dans Java 8.
 	
 	\section{Les tests}
 	Pendant les tests on a dû vérifier:
@@ -125,6 +129,8 @@
 		\end{itemize}
 		\item la recherche de ressources 
 	\end{enumerate}
+	
+	
 	Le processus de vérification est inclus dans le fichier ....
 	\section{Façon de travail}
 		\subsection{Partage de travail}
