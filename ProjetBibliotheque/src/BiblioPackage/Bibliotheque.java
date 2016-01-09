@@ -73,65 +73,52 @@ public class Bibliotheque {
         return Nom;
     }
 
-    public void debutTravail() {
+    public void debutTravail() {// Lit les fichiers
 
         JSONParser parser = new JSONParser();
         int maxCard = 0;
-        try {
+        try {//lit le fichier adherent et rempli la liste
             JSONArray a = (JSONArray) parser.parse(new FileReader("adherent.json"));
 
             for (Object o : a) {
                 JSONObject adherent = (JSONObject) o;
 
                 String nom = (String) adherent.get("nom");
-                System.out.println(nom);
-
+                
                 String prenom = (String) adherent.get("prenom");
-                System.out.println(prenom);
-
+                
                 String adresse = (String) adherent.get("adresse");
-                System.out.println(adresse);
-
+                
                 String dn = (String) adherent.get("dn");
-                System.out.println(dn);
-
+                
                 long tell = (long) adherent.get("tel");
                 int tel = (int) (long) tell;
-                System.out.println(tel);
-
+                
                 String mail = (String) adherent.get("mail");
-                System.out.println(mail);
-
+                
                 long numm = (long) adherent.get("num");
                 int num = (int) (long) numm;
-                System.out.println(num);
-
+                
                 String mdp = (String) adherent.get("mdp");
-                System.out.println(mdp);
-
+                
                 long livv = (long) adherent.get("nbLivre");
                 int liv = (int) (long) livv;
-                System.out.println(liv);
-
+                
                 long revv = (long) adherent.get("nbRevue");
                 int rev = (int) (long) revv;
-                System.out.println(rev);
-
+                
                 long cdd = (long) adherent.get("nbCd");
                 int cd = (int) (long) cdd;
-                System.out.println(cd);
 
                 long dvdd = (long) adherent.get("nbDvd");
                 int dvd = (int) (long) dvdd;
-                System.out.println(dvd);
 
                 long ree = (long) adherent.get("nbReserve");
                 int re = (int) (long) ree;
-                System.out.println(re);
 
-                Adherent ad = new Adherent(nom, prenom, adresse, dn, tel, mail, num, mdp, liv, rev, cd, dvd, re);
+                Adherent ad = new Adherent(nom, prenom, adresse, dn, tel, mail, num, mdp, liv, rev, cd, dvd, re);// creer l'adherent lu
 
-                if (maxCard < num) {
+                if (maxCard < num) {// retient le numero de carte le plus grand
                     maxCard = num;
                 }
                 JSONArray emprunte = (JSONArray) adherent.get("emprunte");
@@ -140,66 +127,52 @@ public class Bibliotheque {
                     JSONObject emp = (JSONObject) c;
 
                     String titre = (String) emp.get("titre");
-                    System.out.println(titre);
 
                     String auteur = (String) emp.get("auteur");
-                    System.out.println(auteur);
 
                     String categorie = (String) emp.get("categorie");
-                    System.out.println(categorie);
 
                     String reference = (String) emp.get("reference");
-                    System.out.println(reference);
 
                     long numeroCartee = (long) emp.get("numeroCarte");
                     int numeroCarte = (int) (long) numeroCartee;
-                    System.out.println(numeroCarte);
 
                     String time = (String) emp.get("time");
-                    System.out.println(time);
 
-                    ad.addEmprunte(new Emprunt(titre, auteur, categorie, reference, numeroCarte, time));
+                    ad.addEmprunte(new Emprunt(titre, auteur, categorie, reference, numeroCarte, time));//ajoute des emprunts a l'adherent
                 }
-                this.adh.add(ad);
+                this.adh.add(ad);// ajoute l'adherent lu
             }
         } catch (FileNotFoundException e) {
         } catch (IOException | ParseException e) {
         }
 
-        try {
+        try {//lit le fichier bibliothecaire et rempli la liste
             JSONArray a = (JSONArray) parser.parse(new FileReader("bibliothecaire.json"));
 
             for (Object o : a) {
                 JSONObject biblio = (JSONObject) o;
 
                 String nom = (String) biblio.get("nom");
-                System.out.println(nom);
 
                 String prenom = (String) biblio.get("prenom");
-                System.out.println(prenom);
 
                 String adresse = (String) biblio.get("adresse");
-                System.out.println(adresse);
 
                 String dn = (String) biblio.get("dn");
-                System.out.println(dn);
 
                 long tell = (long) biblio.get("tel");
                 int tel = (int) (long) tell;
-                System.out.println(tel);
 
                 String mail = (String) biblio.get("mail");
-                System.out.println(mail);
 
                 long numm = (long) biblio.get("num");
                 int num = (int) (long) numm;
-                System.out.println(num);
 
                 String mdp = (String) biblio.get("mdp");
-                System.out.println(mdp);
 
-                this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num, mdp));
-                if (maxCard < num) {
+                this.bibliothecaire.add(new Bibliothecaire(nom, prenom, adresse, dn, tel, mail, num, mdp));// creer le bibilothecaire lu et l'ajoute a la liste
+                if (maxCard < num) {//retient le numero de carte le plus eleve
                     maxCard = num;
                 }
             }
@@ -207,46 +180,36 @@ public class Bibliotheque {
         } catch (IOException | ParseException e) {
         }
 
-        try {
+        try {// lit le fichier ressource et rempli les listes
             JSONArray a = (JSONArray) parser.parse(new FileReader("ressource.json"));
 
             for (Object o : a) {
                 JSONObject resource = (JSONObject) o;
 
                 String titre = (String) resource.get("titre");
-                System.out.println(titre);
 
                 String auteur = (String) resource.get("auteur");
-                System.out.println(auteur);
 
                 String categorie = (String) resource.get("categorie");
-                System.out.println(categorie);
 
                 String nationalite = (String) resource.get("nationalite");
-                System.out.println(nationalite);
 
                 String reference = (String) resource.get("reference");
-                System.out.println(reference);
 
                 String description = (String) resource.get("description");
-                System.out.println(description);
 
                 long nDisponible = (long) resource.get("nbDisponible");
                 int nbDisponible = (int) (long) nDisponible;
-                System.out.println(nbDisponible);
 
                 long nReserve = (long) resource.get("nbReserve");
                 int nbReserve = (int) (long) nReserve;
-                System.out.println(nbReserve);
 
                 long nTotal = (long) resource.get("nbTotal");
                 int nbTotal = (int) (long) nTotal;
-                System.out.println(nbTotal);
 
                 String type = (String) resource.get("type");
-                System.out.println(type);
 
-                switch (type) {
+                switch (type) {// regarde de quel type est la ressource pour l'ajouter dans la bonne liste
                     case "livre":
                         this.doc.add(new Livre(titre, auteur, categorie, nationalite, reference, description, nbTotal, nbDisponible, nbReserve));
                         break;
@@ -265,46 +228,40 @@ public class Bibliotheque {
         } catch (FileNotFoundException e) {
         } catch (IOException | ParseException e) {
         }
-        try {
+        try {// lit le fichier reserve et rempli la liste
             JSONArray a = (JSONArray) parser.parse(new FileReader("reserve.json"));
 
             for (Object o : a) {
                 JSONObject adherent = (JSONObject) o;
 
                 String titre = (String) adherent.get("titre");
-                System.out.println(titre);
 
                 String auteur = (String) adherent.get("auteur");
-                System.out.println(auteur);
 
                 String categorie = (String) adherent.get("categorie");
-                System.out.println(categorie);
 
                 String reference = (String) adherent.get("reference");
-                System.out.println(reference);
 
                 long numeroCartee = (long) adherent.get("numeroCarte");
                 int numeroCarte = (int) (long) numeroCartee;
-                System.out.println(numeroCarte);
 
                 String time = (String) adherent.get("time");
-                System.out.println(time);
 
-                this.res.add(new Reservation(titre, auteur, categorie, reference, numeroCarte, time));
+                this.res.add(new Reservation(titre, auteur, categorie, reference, numeroCarte, time));// ajoute la reservation lu
 
             }
         } catch (FileNotFoundException e) {
         } catch (IOException | ParseException e) {
         }
 
-        if (this.bibliothecaire.size() < 1) {
+        if (this.bibliothecaire.size() < 1) {// si il n'y a pas de bibliothecaire, on en ajoute un par defaut
             this.bibliothecaire.add(new Bibliothecaire("new", "new", "", "", 12345, "", -1, "password"));
         }
-        Personne.setMinNombre(maxCard);
+        Personne.setMinNombre(maxCard);// on met le numero de carte de la derniere personne
 
     }
 
-    public void finTravail() throws IOException {
+    public void finTravail() throws IOException {// ecrit les fichiers
         JSONObject obj, emp;
         JSONArray emprunte;
         JSONArray adherent = new JSONArray();
@@ -312,7 +269,7 @@ public class Bibliotheque {
         JSONArray ressource = new JSONArray();
         JSONArray reserve = new JSONArray();
 
-        for (Adherent adh1 : this.adh) {
+        for (Adherent adh1 : this.adh) {// transforme la liste d'adherent en objet JSON
             obj = new JSONObject();
             emprunte = new JSONArray();
             obj.put("nom", adh1.getNom());
@@ -343,7 +300,7 @@ public class Bibliotheque {
             adherent.add(obj);
         }
 
-        for (Bibliothecaire bib : this.bibliothecaire) {
+        for (Bibliothecaire bib : this.bibliothecaire) {// transforme la liste de bibliothecaire en objet JSON
             obj = new JSONObject();
             obj.put("nom", bib.getNom());
             obj.put("prenom", bib.getPrenom());
@@ -357,7 +314,7 @@ public class Bibliotheque {
             biblio.add(obj);
         }
 
-        for (Ressource ress : this.doc) {
+        for (Ressource ress : this.doc) {// transforme la liste des ressources en objet JSON
             obj = new JSONObject();
             obj.put("titre", ress.getTitre());
             obj.put("auteur", ress.getAuteur());
@@ -368,7 +325,7 @@ public class Bibliotheque {
             obj.put("nbDisponible", ress.getNbDisponible());
             obj.put("nbReserve", ress.getNbReserve());
             obj.put("nbTotal", ress.getNbTotal());
-            if (ress instanceof Livre) {
+            if (ress instanceof Livre) {// regarde de quel type est la ressource est rempli le parametre type
                 obj.put("type", "livre");
             } else if (ress instanceof Revue) {
                 obj.put("type", "revue");
@@ -381,7 +338,7 @@ public class Bibliotheque {
             ressource.add(obj);
         }
 
-        for (Reservation reserv : this.res) {
+        for (Reservation reserv : this.res) {// transforme la liste des reservations en objet JSON
             obj = new JSONObject();
             obj.put("titre", reserv.getTitre());
             obj.put("auteur", reserv.getAuteur());
@@ -394,25 +351,17 @@ public class Bibliotheque {
         }
 
         // try-with-resources statement based on post comment below :)
-        try (FileWriter file = new FileWriter("adherent.json")) {
+        try (FileWriter file = new FileWriter("adherent.json")) {// ecrit la liste d'adherent
             file.write(adherent.toJSONString());
-            System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + adherent);
         }
-        try (FileWriter file1 = new FileWriter("bibliothecaire.json")) {
+        try (FileWriter file1 = new FileWriter("bibliothecaire.json")) {// ecrit la liste de bibliothecaire
             file1.write(biblio.toJSONString());
-            System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + biblio);
         }
-        try (FileWriter file2 = new FileWriter("ressource.json")) {
+        try (FileWriter file2 = new FileWriter("ressource.json")) {// ecrit la liste des ressources
             file2.write(ressource.toJSONString());
-            System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + ressource);
         }
-        try (FileWriter file3 = new FileWriter("reserve.json")) {
+        try (FileWriter file3 = new FileWriter("reserve.json")) {// ecrit la liste des reservations
             file3.write(reserve.toJSONString());
-            System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + reserve);
         }
 
     }
@@ -423,16 +372,18 @@ public class Bibliotheque {
     /**
      */
     public void ajouterAdherent() {
+        
         System.out.println("Veuillez entrer :");
         System.out.print("- nom : ");
         String n = Lire.S();
         System.out.print("- prenom : ");
         String p = Lire.S();
+        
         ArrayList<Adherent> ad = this.chercherAdherent(n, p);
-        String c = "o";
-        if (!ad.isEmpty()) {
+        String c = "o";// par defaut on continue
+        if (!ad.isEmpty()) {// si on a trouve un adherent ayant meme nom et prenom
+            System.out.println("Voici la liste des adherents ayant le meme nom :");
             for (Adherent adh1 : ad) {
-                System.out.println("Voici la liste des adherents ayant le meme nom :");
                 System.out.println(adh1.toString() + "\nDate de naissance: " + adh1.getDateNaissance() + "\nAdresse: " + adh1.getAdresse() + "\nMail: " + adh1.getMail());
             }
             System.out.println("Voulez-vous en creer un nouveau (o/n) : ");
@@ -455,17 +406,18 @@ public class Bibliotheque {
         }
     }
 
-    public void ajouterBibliothecaire() {//idée voir si adhérent déjà inscrit
+    public void ajouterBibliothecaire() {
+        
         System.out.println("Veuillez entrer :");
         System.out.print("- nom : ");
         String n = Lire.S();
         System.out.print("- prenom : ");
         String p = Lire.S();
         ArrayList<Bibliothecaire> bib = this.chercherBibliothecaire(n, p);
-        String c = "o";
-        if (bib.size() != 0) {
+        String c = "o";// par defaut on continue
+        if (!bib.isEmpty()) {// si on a trouve un bibliothecaire ayant meme nom et prenom
+            System.out.println("Voici la liste des bibliothecaires ayant le meme nom :");
             for (Bibliothecaire bib1 : bib) {
-                System.out.println("Voici la liste des bibliothecaires ayant le meme nom :");
                 System.out.print(bib1.toString() + "\nDate de naissance: " + bib1.getDateNaissance() + "\nAdresse:" + bib1.getAdresse() + "\nMail" + bib1.getMail());
             }
             System.out.println("Voulez-vous en creer un nouveau (o/n) : ");
@@ -491,23 +443,23 @@ public class Bibliotheque {
      */
     public void supprimerAdherent() {
 
-        System.out.print("Veuillez entrer le numero de carte de l'adherent a supprimer : ");
+        System.out.print("Veuillez entrer le numero de carte de l'adhérent à supprimer : ");
         int numero = Lire.i();
 
         Adherent ad = this.chercherAdherent(numero);
-        if (ad != null) {
-            if (ad.getEmprunteList().isEmpty()) {
-                for (Reservation reserv : this.res) {
+        if (ad != null) {//si on a trouve un adherent
+            if (ad.getEmprunteList().isEmpty()) {// on regarde si il n'a pas d'emprunts
+                for (Reservation reserv : this.res) {// si il a des reservation elles sont supprime
                     if (reserv.getNumCarte() == ad.getNumeroCarte()) {
                         this.res.remove(reserv);
                     }
                 }
                 this.adh.remove(ad);
-                System.out.println("L'adherent a bien ete supprime.");
-            } else {
-                System.out.println("L'adherent a encore des emprunts");
+                System.out.println("L'adhérent a bien été supprimé.");
+            } else {// si il a des emprunts
+                System.out.println("L'adhérent a encore des emprunts");
             }
-        } else {
+        } else {// si on n'a pas trouve l'adherent
             System.out.println("Le numéro ne correspond pas.");
         }
     }
@@ -516,21 +468,22 @@ public class Bibliotheque {
      */
     public void supprimerBibliothecaire() {
 
-        System.out.print("Veuillez entrer le numero de carte du bibliothecaire a supprimer : ");
+        System.out.print("Veuillez entrer le numero de carte du bibliothécaire à supprimer : ");
         int numero = Lire.i();
 
         Bibliothecaire bib = this.chercherBibliothecaire(numero);
-        if (bib != null) {
+        if (bib != null) {// si on trouve le bibliothecaire
             bibliothecaire.remove(bib);
-            System.out.println("Le bibliothecaire a bien ete supprime.");
-        } else {
+            System.out.println("Le bibliothécaire a bien été supprimé.");
+        } else {// si on ne la pas trouve
             System.out.println("Le numéro ne correspond pas.");
         }
     }
 
     /**
      */
-    public void ajouterRessource() {//idée voir si deja un doc
+    public void ajouterRessource() {
+        
         System.out.println("Veuillez choisir le type : \n 1) Livre \n 2) Revue \n 3) CD \n 4) DVD");
         int type = Lire.choix(4);
         System.out.println("Veuillez entrer :");
@@ -540,15 +493,15 @@ public class Bibliotheque {
         String aut = Lire.S();
 
         if (this.chercherRessource(t, aut) != null) {// regarde si un autre livre existe deja
-            System.out.println("Un livre du meme titre et auteur existe deja, voulez-vous : \n 1) en ajouter des autres \n 2) annuler");
+            System.out.println("Un livre du même titre et auteur existe déja, voulez-vous : \n 1) en ajouter des autres \n 2) annuler");
             int c = Lire.choix(2);
-            if (c == 1) {
+            if (c == 1) {// si on veut en rajouter
                 Ressource DocTrouve = this.chercherRessource(t, aut);
-                System.out.print("Veuillez entrer le nombre a rajouter : ");
+                System.out.print("Veuillez entrer le nombre à rajouter : ");
                 int nb = Lire.i();
                 DocTrouve.setNbTotal(DocTrouve.getNbTotal() + nb);
             }
-        } else {
+        } else {// si il n'existe pas on continue
             System.out.print("- categorie : ");
             String cat = Lire.S();
             System.out.print("- nation : ");
@@ -556,8 +509,8 @@ public class Bibliotheque {
             System.out.print("- ref : ");
             String ref = Lire.S();
 
-            while (this.chercherRessource(ref) != null) {// regarde si la refernce est deja utilise
-                System.out.println("Un livre a deja cet reference veuillez en choir une autre : ");
+            while (this.chercherRessource(ref) != null) {// regarde si la reference est deja utilise
+                System.out.println("Un livre a déja cet référence veuillez en choisir une autre : ");
                 ref = Lire.S();
             }
 
@@ -566,7 +519,7 @@ public class Bibliotheque {
             System.out.print("- le nombre : ");
             int nb = Lire.i();
 
-            switch (type) {
+            switch (type) {// ajoute la ressource en fonction du type
                 case 1:
                     this.doc.add(new Livre(t, aut, cat, nation, ref, desc, nb));
                     break;
@@ -591,16 +544,16 @@ public class Bibliotheque {
         System.out.print("Veuillez entrer la reference de la ressource a supprimer : ");
         String ref = Lire.S();
 
-        for (int i = 0; i < this.doc.size(); i++) {
+        for (int i = 0; i < this.doc.size(); i++) {// cherche et supprime la ressource
             if (ref.equals(this.doc.get(i).getReference())) {
                 this.doc.remove(i);
-                supprime = true;
+                supprime = true;// si on a trouve et supprime
             }
         }
         if (supprime) {
-            System.out.println("La ressource a bien ete supprime.");
+            System.out.println("La ressource a bien été supprimée.");
         } else {
-            System.out.println("Le reference ne correspond pas.");
+            System.out.println("Le référence ne correspond pas.");
         }
 
     }
@@ -622,8 +575,8 @@ public class Bibliotheque {
     }
 
     public void afficherReserve() {
-        if (this.res.isEmpty()) {
-            System.out.println("Rien reserve.");
+        if (this.res.isEmpty()) {// si pas de reservation
+            System.out.println("Rien est réservé.");
         } else {
             for (Reservation reserv : this.res) {
                 System.out.println(reserv.toString());
@@ -632,18 +585,18 @@ public class Bibliotheque {
     }
 
     public void afficherReserve(Adherent adh) {
-        if (this.res.isEmpty()) {
-            System.out.println("Rien reserve.");
+        if (this.res.isEmpty()) {// si pas de reservation pour tout le monde
+            System.out.println("Rien est réservé.");
         } else {
             int i = 0;
-            for (Reservation reserv : this.res) {
+            for (Reservation reserv : this.res) {// cherche les reservation de l'adherent et les affiche
                 if (reserv.getNumCarte() == adh.getNumeroCarte()) {
                     i++;
                     System.out.println(reserv.toString());
                 }
             }
-            if (i == 0) {
-                System.out.println("Rien reserve.");
+            if (i == 0) {// si l'adherent n'a pas de reservation
+                System.out.println("Rien est réservé.");
             }
         }
     }
@@ -655,16 +608,16 @@ public class Bibliotheque {
         ArrayList<Resultat> resultats = new ArrayList();
         ArrayList<String> motCles = new ArrayList();
 
-        System.out.println("Veuillez entrer les mots cles suivis d'un appui sur a touche entrer. Pour arreter d'entrer les mots cles, ne mettez rien, et appuyez sur entrer.");
+        System.out.println("Veuillez entrer les mots clés suivis d'un appui sur la touche entrer. \nPour arrêter d'entrer les mots clés, ne mettez rien, et appuyez sur entrer.");
         String m = Lire.S();
-        while (!m.equals("")) {
-            motCles.add(m);
+        while (!m.equals("")) {// tant qu'on n'a pas fini d'entrer les mots cles
+            motCles.add(m);// on ajoute les mots cles
             m = Lire.S();
         }
 
-        for (int i = 0; i < motCles.size(); i++) {
+        for (int i = 0; i < motCles.size(); i++) {// pour chaque mot cles
             m = motCles.get(i);
-            for (int j = 0; j < this.doc.size(); j++) {
+            for (int j = 0; j < this.doc.size(); j++) {// pour chaque ressource, on regarde si un critère correspond, si c'est le cas on ajoute la ressource a la litse des résultats
                 Ressource d = this.doc.get(j);
                 if (d.getAuteur().contains(m)) {
                     this.ajouterResultat(resultats, d);
@@ -687,12 +640,12 @@ public class Bibliotheque {
             }
         }
 
-        Collections.sort(resultats);
+        Collections.sort(resultats);// on trie les résultats selon la pertinence
 
         return resultats;
     }
 
-    public ArrayList<Resultat> chercherRessourceCriteres() {//methode pas fini
+    public ArrayList<Resultat> chercherRessourceCriteres() {
         ArrayList<Resultat> resultats = new ArrayList();
 
         System.out.println("Veuillez entrer :");
@@ -700,14 +653,14 @@ public class Bibliotheque {
         String t = Lire.S();
         System.out.print("- auteur : ");
         String aut = Lire.S();
-        System.out.print("- categorie : ");
+        System.out.print("- catégorie : ");
         String cat = Lire.S();
         System.out.print("- nation : ");
         String nation = Lire.S();
         System.out.print("- description : ");
         String desc = Lire.S();
 
-        for (int j = 0; j < this.doc.size(); j++) {
+        for (int j = 0; j < this.doc.size(); j++) {// pour chaque ressources on regarde si chaque critères sont égaux entre eux, et si un est egal, on le rajoute a la liste des resultats
             Ressource d = this.doc.get(j);
             if (d.getTitre().equalsIgnoreCase(t) && !t.equals("")) {
                 this.ajouterResultat(resultats, d);
@@ -726,13 +679,13 @@ public class Bibliotheque {
             }
         }
 
-        Collections.sort(resultats);
+        Collections.sort(resultats);// trie les resultats selon la pertinence
 
         return resultats;
     }
 
     public void ajouterResultat(ArrayList<Resultat> resultats, Ressource d) {
-        if (resultats.isEmpty()) {
+        if (resultats.isEmpty()) {// si c'est le permier resultat on l'ajoute a la liste
             resultats.add(new Resultat(d, 1));
         } else {
             int indiceTemp = -1;
@@ -750,12 +703,12 @@ public class Bibliotheque {
     }
 
     public ArrayList<Resultat> checherRessourceRef() {
-        System.out.print("Veuillez entrer la reference recherche : ");
+        System.out.print("Veuillez entrer la référence recherché : ");
         String ref = Lire.S();
         Ressource r = this.chercherRessource(ref);
         ArrayList<Resultat> resultat = new ArrayList();
         if (r != null) {
-            resultat.add(new Resultat(r, 1));
+            resultat.add(new Resultat(r, 1));// ajoute le resultat a la liste de resultat
         }
         return resultat;
     }
@@ -841,12 +794,12 @@ public class Bibliotheque {
     public Reservation isReserved(Ressource ress, Adherent ad) {
         int i = 1;
         for (Reservation rese : this.res) {
-            if (ress.getTitre().equals(rese.getTitre())) {
+            if (ress.getTitre().equals(rese.getTitre())) {// cherche la ressource en question
                 if (ad.getNumeroCarte() == rese.getNumCarte()) {
                     if (i == 1) {
                         return rese;
-                    } else {
-                        System.out.println("Vous etes " + i + "dans la file d'attente.");
+                    } else {// si l
+                        System.out.println("Vous êtes " + i + "dans la file d'attente.");
                         return null;
                     }
                 } else {
@@ -858,6 +811,7 @@ public class Bibliotheque {
     }
     
      public void checkReservations() {
+         
         for(int i=0; i<this.res.size();i++){
             if(this.res.get(i).getDateValide().isBefore(new DateTime())){
                 for (Ressource ress : this.doc) {
@@ -873,7 +827,7 @@ public class Bibliotheque {
 
     public void annulerReservation(Adherent ad) {
         if (this.res.isEmpty()) {
-            System.out.println("Rien reserve.");
+            System.out.println("Rien est réservé.");
         } else {
             int i = 0;
             ArrayList<Reservation> rese = new ArrayList();
@@ -884,7 +838,7 @@ public class Bibliotheque {
                     System.out.println(i + ") " + reserv.toString());
                 }
             }
-            System.out.print("Choisi reservation a annuler (1-" + i + "):");
+            System.out.print("Choisi reservation à annuler (1-" + i + "):");
             int e = Lire.choix(i);
             this.res.remove(rese.get(e - 1));
             for (Ressource ress : this.doc) {
@@ -892,20 +846,20 @@ public class Bibliotheque {
                     ress.setNbReserve(ress.getNbReserve() - 1);
                 }
             }
-            System.out.println("Reservation: " + rese.get(e - 1).toString() + "\n annulle.");
+            System.out.println("Reservation: " + rese.get(e - 1).toString() + "\n annullée.");
         }
     }
 
     public boolean faireReservation(Adherent ad) {
         if (ad.getNbReserve() > max_reserve) {
-            System.out.println("Reservation impossible. Nombre reserve depasse.");
+            System.out.println("Réservation impossible. Nombre réservé depassé.");
             return false;
         }
         ArrayList<Resultat> r = new ArrayList();
         System.out.println("Voulez-vous chercher avec : ");
-        System.out.println("    1) des mots cles");
-        System.out.println("    2) des criteres ");
-        System.out.println("    3) la reference");
+        System.out.println("    1) des mots clés");
+        System.out.println("    2) des critères ");
+        System.out.println("    3) la référence");
         int d = Lire.choix(3);
         switch (d) {
             case 1:
@@ -919,18 +873,18 @@ public class Bibliotheque {
                 break;
         }
         afficherResultat(r);
-        System.out.println("Reserve ressource numero: (1-" + r.size() + ")");
+        System.out.println("Réservé ressource numéro: (1-" + r.size() + ")");
         int e = Lire.choix(r.size());
         Reservation nouvelle = new Reservation(r.get(e - 1).getRessource(), ad);
         res.add(nouvelle);
         r.get(e - 1).getRessource().setNbReserve(r.get(e - 1).getRessource().getNbReserve() + 1);
-        System.out.println("Reservation: \n" + nouvelle.toString());
+        System.out.println("Réservation: \n" + nouvelle.toString());
         return true;
     }
 
     public boolean faireReservation(Ressource reserve, Adherent ad) {
         if (ad.getNbReserve() > max_reserve) {
-            System.out.println("Reservation impossible. Nombre reserve depasse.");
+            System.out.println("Réservation impossible. Nombre réservé dépassé.");
             return false;
         }
         Reservation rese = new Reservation(reserve, ad);
@@ -938,7 +892,7 @@ public class Bibliotheque {
         if (this.res.isEmpty()) {
             System.out.println("dupa");
         } else {
-            System.out.println("La reservation a ete faite.");
+            System.out.println("La réservation a été faite.");
         }
         reserve.setNbReserve(reserve.getNbReserve() + 1);
         return true;
@@ -946,16 +900,16 @@ public class Bibliotheque {
 
     public boolean emprunter(Adherent ad) {
         if (ad.getRetard()) {
-            System.out.println("Vous avez ressources en retard! Vous ne pouvez pas emprunter.");
+            System.out.println("Vous avez des ressources en retard! Vous ne pouvez pas emprunter.");
         } else if (ad.isRetard()) {
-            System.out.println("Vous avez ressources en retard! Vous ne pouvez pas emprunter.");
+            System.out.println("Vous avez des ressources en retard! Vous ne pouvez pas emprunter.");
         } else {
             this.checkReservations();
             ArrayList<Resultat> r = new ArrayList();
             System.out.println("Voulez-vous chercher avec : ");
-            System.out.println("    1) des mots cles");
-            System.out.println("    2) des criteres ");
-            System.out.println("    3) la reference");
+            System.out.println("    1) des mots clés");
+            System.out.println("    2) des critères ");
+            System.out.println("    3) la référence");
             int d = Lire.choix(3);
             switch (d) {
                 case 1:
@@ -970,7 +924,7 @@ public class Bibliotheque {
             }
             afficherResultat(r);
             if (!r.isEmpty()) {
-                System.out.println("Emprunte ressource numero: (1-" + r.size() + ")");
+                System.out.println("Emprunté ressource numéro: (1-" + r.size() + ")");
                 int e = Lire.choix(r.size());
 
                 if (r.get(e - 1).getRessource().getNbDisponible() > 0) {
@@ -978,16 +932,16 @@ public class Bibliotheque {
                     if (((r.get(e - 1).getRessource().getNbReserve() >= r.get(e - 1).getRessource().getNbDisponible()) && resDelete != null)
                             || (r.get(e - 1).getRessource().getNbReserve() < r.get(e - 1).getRessource().getNbDisponible())) {
                         if (r.get(e - 1).getRessource() instanceof Livre && ad.getNbLivre() >= this.max_livre) {
-                            System.out.println("Emprunt impossible. Nombre livres empruntees depasse.");
+                            System.out.println("Emprunt impossible. Nombre livres empruntés depassé.");
                             return false;
                         } else if (r.get(e - 1).getRessource() instanceof Revue && ad.getNbRevue() >= this.max_revue) {
-                            System.out.println("Emprunt impossible. Nombre revues empruntees depasse.");
+                            System.out.println("Emprunt impossible. Nombre revues empruntées depassé.");
                             return false;
                         } else if (r.get(e - 1).getRessource() instanceof CD && ad.getNbCd() >= this.max_cd) {
-                            System.out.println("Emprunt impossible. Nombre cd empruntees depasse.");
+                            System.out.println("Emprunt impossible. Nombre cd empruntés dépassé.");
                             return false;
                         } else if (r.get(e - 1).getRessource() instanceof DVD && ad.getNbDVD() >= this.max_dvd) {
-                            System.out.println("Emprunt impossible. Nombre dvd empruntees depasse.");
+                            System.out.println("Emprunt impossible. Nombre dvd empruntés depassé.");
                             return false;
                         } else {
                             r.get(e - 1).getRessource().setNbDisponible(r.get(e - 1).getRessource().getNbDisponible() - 1);
@@ -999,7 +953,7 @@ public class Bibliotheque {
                             return true;
                         }
                     } else {
-                        System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire reservation \n 2) Revenir au menu principal \n");
+                        System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire réservation \n 2) Revenir au menu principal \n");
                         e = Lire.choix(2);
                         switch (e) {
                             case 1:
@@ -1010,7 +964,7 @@ public class Bibliotheque {
                         }
                     }
                 } else {
-                    System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire reservation \n 2) Revenir au menu principal \n");
+                    System.out.println("Il n'y a pas exemplaire disponible. \n 1) Faire réservation \n 2) Revenir au menu principal \n");
                     e = Lire.choix(2);
                     switch (e) {
                         case 1:
@@ -1037,16 +991,16 @@ public class Bibliotheque {
                 if (((ress.getNbReserve() >= ress.getNbDisponible()) && resDelete != null)
                         || (ress.getNbReserve() < ress.getNbDisponible())) {
                     if (ress instanceof Livre && ad.getNbLivre() >= this.max_livre) {
-                        System.out.println("Emprunt impossible. Nombre livres empruntees depasse.");
+                        System.out.println("Emprunt impossible. Nombre livres empruntés dépassé.");
                         return false;
                     } else if (ress instanceof Revue && ad.getNbRevue() >= this.max_revue) {
-                        System.out.println("Emprunt impossible. Nombre revues empruntees depasse.");
+                        System.out.println("Emprunt impossible. Nombre revues empruntées dépassé.");
                         return false;
                     } else if (ress instanceof CD && ad.getNbCd() >= this.max_cd) {
-                        System.out.println("Emprunt impossible. Nombre cd empruntees depasse.");
+                        System.out.println("Emprunt impossible. Nombre cd empruntés dépassé.");
                         return false;
                     } else if (ress instanceof DVD && ad.getNbDVD() >= this.max_dvd) {
-                        System.out.println("Emprunt impossible. Nombre dvd empruntees depasse.");
+                        System.out.println("Emprunt impossible. Nombre dvd empruntés dépassé.");
                         return false;
                     } else {
                         ress.setNbDisponible(ress.getNbDisponible() - 1);
@@ -1077,9 +1031,9 @@ public class Bibliotheque {
         int e = 0;
         int i;
         while (e != 3) {
-            System.out.println("Choisir les ressources a rendre: \n"
+            System.out.println("Choisir les ressources à rendre: \n"
                     + "1) Entrez le titre.\n"
-                    + "2) Affichez tout les ressources empruntees.\n"
+                    + "2) Affichez tout les ressources empruntées.\n"
                     + "3) Revenir au menu principal.");
             e = Lire.choix(3);
             switch (e) {
@@ -1113,7 +1067,7 @@ public class Bibliotheque {
                             i++;
                         }
                         if (i == ad.getEmprunteList().size()) {
-                            System.out.println("Ressource: " + tit + "pas trouve.");
+                            System.out.println("Ressource: " + tit + "pas trouvée.");
                         }
                     } else {
                         System.out.println("Rien a rendre.");
