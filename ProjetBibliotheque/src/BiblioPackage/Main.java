@@ -9,15 +9,13 @@ import java.util.*;
  */
 public class Main {
 
-    private static boolean estConnecte = false;
-
     public static void main(String args[]) {
         Bibliotheque b = new Bibliotheque("b");
         System.out.println("Reading configuration files...");
-        b.debutTravail();
+        b.debutTravail();//lit les fichiers
         menu(b);
         try {
-            b.finTravail();
+            b.finTravail();//ecrit les fichiers
         } catch (IOException ex) {
             System.out.println("Couldn't create adherent file!" + ex.toString());
         }
@@ -44,6 +42,7 @@ public class Main {
                     break;
                 case 3:
                     menuRechercher(b);
+                    break;
                 case 4:
                     b.afficherRessource();
                     break;
@@ -53,12 +52,12 @@ public class Main {
 
     public static void menuRechercher(Bibliotheque b) {
         ArrayList<Resultat> r = new ArrayList();
-        int e = 3;
-        while (e == 3) {
+        String e="o";
+        while(e.equalsIgnoreCase("o")){
             System.out.println("Voulez-vous chercher avec : ");
-            System.out.println("    1) des mots cles");
-            System.out.println("    2) des criteres ");
-            System.out.println("    3) la reference");
+            System.out.println("    1) des mots clés");
+            System.out.println("    2) des critères ");
+            System.out.println("    3) la référence");
             int d = Lire.choix(3);
             switch (d) {
                 case 1:
@@ -72,59 +71,63 @@ public class Main {
                     break;
             }
             afficherResultat(r);
+            System.out.println("Voulez- vous faire une nouvelle recherche (o/n) :");
+            e=Lire.S();
         }
     }
 
     public static void menuRechercher(Bibliotheque b, Adherent adh) {
         ArrayList<Resultat> r = new ArrayList();
-        int e = 3;
         int ee = 0;
-        while (e == 3) {
-            System.out.println("Voulez-vous chercher avec : ");
-            System.out.println("    1) des mots cles");
-            System.out.println("    2) des criteres ");
-            System.out.println("    3) la reference");
-            int d = Lire.choix(3);
-            switch (d) {
-                case 1:
-                    r = b.chercherRessourceMotCles();
-                    break;
-                case 2:
-                    r = b.chercherRessourceCriteres();
-                    break;
-                case 3:
-                    r = b.checherRessourceRef();
-                    break;
-            }
-            afficherResultat(r);
-
-            System.out.println("Voulez-vous : ");
-            if (!r.isEmpty()) {
-                System.out.println("    1) emprunter");
-                System.out.println("    2) reserver ");
-            }
-            System.out.println("    3) faire une nouvelle recherche");
-            System.out.println("    4) revenir au menu principal");
-            e = Lire.choix(4);
-
-            switch (e) {
-                case 1:
-                    System.out.println("Emprunte ressource numero: (1-" + (r.size()) + ")");
-                    ee = Lire.choix(r.size());
-                    b.emprunter(r.get(ee - 1).getRessource(), adh);
-                    break;
-                case 2:
-                    System.out.println("Reserve ressource numero: (1-" + (r.size()) + ")");
-                    ee = Lire.choix(r.size());
-                    b.faireReservation(r.get(ee - 1).getRessource(), adh);
-                    break;
-                case 3:
-                    menuRechercher(b, adh);
-                    break;
-                case 4:
-                    break;
-            }
+        System.out.println("Voulez-vous chercher avec : ");
+        System.out.println("    1) des mots cles");
+        System.out.println("    2) des criteres ");
+        System.out.println("    3) la reference");
+        int d = Lire.choix(3);
+        switch (d) {
+            case 1:
+                r = b.chercherRessourceMotCles();
+                break;
+            case 2:
+                r = b.chercherRessourceCriteres();
+                break;
+            case 3:
+                r = b.checherRessourceRef();
+                break;
         }
+        afficherResultat(r);
+
+        System.out.println("Voulez-vous : ");
+        int minChoix;
+        if (!r.isEmpty()) {
+            System.out.println("    1) emprunter");
+            System.out.println("    2) reserver ");
+            minChoix=1;
+        }
+        else{
+            minChoix=3;
+        }
+        System.out.println("    3) faire une nouvelle recherche");
+        System.out.println("    4) revenir au menu principal");
+        int e = Lire.entierCompris(minChoix, 4);// minChoix est la pour ne pas entrer de 1 ou 2 si pas de documents
+
+        switch (e) {
+            case 1:
+                System.out.println("Emprunter ressource numero: (1-" + (r.size()) + ")");
+                ee = Lire.choix(r.size());
+                b.emprunter(r.get(ee - 1).getRessource(), adh);
+                break;
+            case 2:
+                System.out.println("Réserver ressource numero: (1-" + (r.size()) + ")");
+                ee = Lire.choix(r.size());
+                b.faireReservation(r.get(ee - 1).getRessource(), adh);
+                break;
+            case 3:
+                menuRechercher(b, adh);
+                break;
+            case 4:
+                break;
+            }
 
     }
 
@@ -145,40 +148,40 @@ public class Main {
     }
 
     public static void connecterAdh(Bibliotheque b) {
+        
         System.out.println("Veuillez entrer votre numéro de carte :");
         int num = Lire.i();
         System.out.println("Veuillez entrer votre mot de passe :");
         String mdp = Lire.S();
         Adherent adh = b.chercherAdherent(num);
-        if (adh != null) {
-            if (adh.getMdp().equals(mdp)) {
+        if (adh != null) {// si on a trouvé l'adherent
+            if (adh.getMdp().equals(mdp)) {//si le mot de passe est le bon
                 System.out.println("Vous etes bien connecté");
-                estConnecte = true;
                 menuAdh(b, adh);
-            } else {
+            } else {// sinon le mot de passe est mauvais
                 System.out.println("Votre mot de passe est faux est faux");
             }
-        } else {
+        } else {// on n'a pas trouve l'adherent
             System.out.println("Votre numéro de carte est faux");
         }
 
     }
 
     public static void connecterBib(Bibliotheque b) {
+        
         System.out.println("Veuillez entrer votre numéro de carte :");
         int num = Lire.i();
         System.out.println("Veuillez entrer votre mot de passe :");
         String mdp = Lire.S();
         Bibliothecaire bib = b.chercherBibliothecaire(num);
-        if (bib != null) {
-            if (bib.getMdp().equals(mdp)) {
+        if (bib != null) {// si on a trouvé le bibliothecaire
+            if (bib.getMdp().equals(mdp)) {//si le mot de passe est le bon
                 System.out.println("Vous etes bien connecté");
-                estConnecte = true;
                 menuBib(b, bib);
-            } else {
+            } else {// sinon le mot de passe est mauvais
                 System.out.println("Votre mot de passe est faux est faux");
             }
-        } else {
+        } else {// on n'a pas trouve le bibliothecaire
             System.out.println("Votre numéro de carte est faux");
         }
     }
@@ -224,7 +227,6 @@ public class Main {
                     break;
             }
         }
-        estConnecte = false;
 
     }
 
@@ -277,7 +279,6 @@ public class Main {
                     break;
             }
         }
-        estConnecte = false;
 
     }
 }

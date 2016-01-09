@@ -21,7 +21,7 @@
 \newtheorem{mydef}{Definition}
 
 \author{Yann Colin \\Grzegorz Maj}
-\title{Médiatheque}
+\title{Médiathèque}
 
 \makeatletter
 \def\maketitle{%
@@ -79,9 +79,9 @@
     
     \section{Introduction}
     
-    L'objectif de ce projet est de creer un programme afin informatiser le système d'information d'une
-    mediatheque. Celui-ci offrira aux adherents des nouveaux services comme par exemple de reserver,
-    d'emprunter via le logiciel. Nous avons du utilise la programmation oriente objet avec comme langage 
+    L'objectif de ce projet est de créer un programme afin informatiser le système d'information d'une
+    médiathèque. Celui-ci offrira aux adhérents des nouveaux services comme par exemple de réserver,
+    d'emprunter via le logiciel des ressources. Nous avons dû utilisé la programmation orientée objet avec comme langage 
     le Java.
     
      
@@ -107,15 +107,15 @@
 		\end{figure}
 	
 	\section{Implémentation}
-	Le logiciel est implémente dans la langage Java. Pour lire les commandes d'utilisateur on a utilise 
+	Le logiciel est implémenté dans la langage Java. Pour lire les commandes de l'utilisateur on a utilisé 
 	la classe \texttt{Lire}.
 	
-	Le projet de mediatheque nécessite d'utiliser une base de données ou d'enregistrer les données dans le 
-	fichier.
-	On a considéré utilisation format XML ou JSON. On a choisi de JSON, parce que c'est plus léger et 
-	simple que XML. Comme un parser on a choisi JSON.simple.
+	Le projet de la médiathèque nécessite d'utiliser une base de données ou d'enregistrer les données dans des
+	fichiers.
+	On a considéré,comme option, l'utilisation du format XML ou du JSON. On a choisi le JSON, parce que il est plus léger et plus
+	simple que le XML. Comme parser, on a choisi le JSON.simple.
 	
-	Faire les emprunts et les réservations a besoin d'utiliser certain format de la date. On a utiliser 
+	Pour faire les emprunts et les réservations, on a besoin d'utiliser certain format de la date. On a utilisé 
 	JodaTime.
 	
 	\section{Les tests}
@@ -137,9 +137,9 @@
 		\item rendre
 		\item réservation
 		\begin{itemize}
-			\item limites de réservation
-			\item durée de réservation
-			\item annuler de réservation
+			\item limites de la réservation
+			\item durée de  la réservation
+			\item annuler une réservation
 		\end{itemize}
 		\item la recherche de ressources 
 	\end{enumerate}
@@ -147,8 +147,8 @@
 	
 	Le processus de vérification est inclus dans le fichier ....
 	
-	\section{Façon de travail}
-		\subsection{Partage de travail}
+	\section{Façon de collaborer}
+		\subsection{Partage du travail}
 		Yann:
 		\begin{itemize}
 			\item diagramme de classes,
@@ -156,7 +156,7 @@
 			\item classe Ressource + classes filles,
 			\item classe Bibliothèque,
 			\begin{itemize}
-				\item tous les méthodes de recherche,
+				\item toutes les méthodes de recherche,
 				\item gestion des comptes d'adhérents et de bibliothécaires,
 				\item menu pour utilisateur,
 			\end{itemize}
@@ -180,33 +180,30 @@
 			\item compte rendu.
 		\end{itemize}
 		
-		Nous avons aussi chacun lit la partie de code créer par l'autre et corrige si besoin était.
-		
-		
-		
+		Nous avons aussi chacun lit la partie de code, créer par l'autre, et corrigé si besoin était.
 		
 		\subsection{Logiciels utilises}
-		Nous avons utilise Netbeans pour implémenter le programme, car c'est un logiciel très complet par 
+		Nous avons utilisé Netbeans pour implémenter le programme, car c'est un logiciel très complet par 
 		rapport a Geany.
 
-		Pour les diagrammes de classes et d'utilisation, nous avons utilise Umbrello qui est un logiciel 	
+		Pour les diagrammes de classes et d'utilisation, nous avons utilisé Umbrello qui est un logiciel 	
 		très simple a utiliser.
 		
-		Pendant le travail on a gardé tous les fichier sur un serveur GitHub avec utilisation du système 
-		Git. Cela nous permet de travailler en même temps sur un même fichier sans avoir de conflits entre 
-		les fichiers. Il nous permet aussi de créer différentes branches pour différentes options est 
-		ensuite de choisir la meilleur. Nous avons utilise le serveur GitHub car il est gratuit, mais en 
+		Pendant le travail, on a gardé tous les fichier sur un serveur GitHub avec utilisation du système 
+		Git. Cela nous a permis de travailler en même temps, sur un même fichier sans avoir de conflits entre 
+		les fichiers. Il nous permet aussi de créer différentes branches, pour différentes options et 
+		ensuite d'en choisir la meilleur. Nous avons utilisé le serveur GitHub car il est gratuit, mais en 
 		contrepartie tout le monde peut voir notre projet.
 		
 		Tout le projet est disponible sous l'adresse
 		\url{https://github.com/grzegorzmaj/projetBibliotheque}.
 		
 		\subsection{Les problèmes}
-		Il y avait problèmes avec gestion de date simple et stable. Le soutiens pour la date dans le Java 
-		n'est pas bon. La solution est utilise JodaTime qui est très connu et utilise dans Java.
+		
+		Le seul problèmes rencontré, fût de trouver une classe de date simple et stable. Il y avait un problème avec la gestion de 
+		date simple et stable. Le soutien pour la date dans le langage Java n'est pas bon. La solution a était d'utilisé le JodaTime 
+		qui est très connu et utilisé dans le langage Java.
 		
 	
-
-\bibliography{bibliografia.bib}
 
 \end{document}
