@@ -376,17 +376,17 @@ public class Bibliotheque {
         System.out.println("Veuillez entrer :");
         System.out.print("- nom : ");
         String n = Lire.S();
-        System.out.print("- prenom : ");
+        System.out.print("- prénom : ");
         String p = Lire.S();
         
         ArrayList<Adherent> ad = this.chercherAdherent(n, p);
         String c = "o";// par defaut on continue
         if (!ad.isEmpty()) {// si on a trouve un adherent ayant meme nom et prenom
-            System.out.println("Voici la liste des adherents ayant le meme nom :");
+            System.out.println("Voici la liste des adhérents ayant le même nom :");
             for (Adherent adh1 : ad) {
                 System.out.println(adh1.toString() + "\nDate de naissance: " + adh1.getDateNaissance() + "\nAdresse: " + adh1.getAdresse() + "\nMail: " + adh1.getMail());
             }
-            System.out.println("Voulez-vous en creer un nouveau (o/n) : ");
+            System.out.println("Voulez-vous en créer un nouveau (o/n) : ");
             c = Lire.S();
         }
         if (c.equals("o")) {
@@ -416,11 +416,11 @@ public class Bibliotheque {
         ArrayList<Bibliothecaire> bib = this.chercherBibliothecaire(n, p);
         String c = "o";// par defaut on continue
         if (!bib.isEmpty()) {// si on a trouve un bibliothecaire ayant meme nom et prenom
-            System.out.println("Voici la liste des bibliothecaires ayant le meme nom :");
+            System.out.println("Voici la liste des bibliothécaires ayant le même nom :");
             for (Bibliothecaire bib1 : bib) {
                 System.out.print(bib1.toString() + "\nDate de naissance: " + bib1.getDateNaissance() + "\nAdresse:" + bib1.getAdresse() + "\nMail" + bib1.getMail());
             }
-            System.out.println("Voulez-vous en creer un nouveau (o/n) : ");
+            System.out.println("Voulez-vous en créer un nouveau (o/n) : ");
             c = Lire.S();
         }
         if (c.equalsIgnoreCase("o")) {
@@ -436,6 +436,8 @@ public class Bibliotheque {
             String mdp = Lire.S();
 
             this.bibliothecaire.add(new Bibliothecaire(n, p, a, dn, tel, am, -1, mdp));
+            System.out.println("Le bibliothécaire à bien été ajouté, il a pour numéro : "+Bibliothecaire.getNombre());
+        
         }
     }
 
