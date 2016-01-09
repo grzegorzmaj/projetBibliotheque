@@ -152,7 +152,6 @@ public class Adherent extends Personne {
      */
     public void addEmprunte(Emprunt obj) {
         this.emprunteList.add(obj);
-        System.out.println(obj.getTitre() + " emprunte.");
     }
 
     /**

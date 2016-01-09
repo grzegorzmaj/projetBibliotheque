@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package BiblioPackage;
 
 /**
  *
  * @author Yann
  */
-public class Resultat implements Comparable{
+public class Resultat implements Comparable{// pour les comparer
     private Ressource ressource;
     private int pertinence;
     
@@ -39,7 +34,7 @@ public class Resultat implements Comparable{
     }
     
    @Override 
-    public int compareTo(Object r) {
+    public int compareTo(Object r) {// compare en fonction de la pertinence pour ensuite pouvoir les trier
         return ((Resultat)r).getPertinence()-this.pertinence;
     }
 

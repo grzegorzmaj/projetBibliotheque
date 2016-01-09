@@ -47,7 +47,7 @@ public class Personne {
      *
      * @param n
      */
-    static public void setMinNombre(int n){
+    static public void setMinNombre(int n){// inscrit le dernier numero de carte
         Personne.nombre = n;
     }
     

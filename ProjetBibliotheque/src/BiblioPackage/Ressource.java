@@ -209,7 +209,7 @@ public class Ressource {
 
     @Override
     public String toString() {
-        return titre + "\n auteur : " + auteur + "\n categorie : " + categorie + "\n nationalite : " + nationalite + "\n reference : " + reference + "\n description : " + description + "\n nbDisponible : " + nbDisponible + "\n nbReserve : " + nbReserve + "\n nbTotal : " + nbTotal;
+        return titre + "\n auteur : " + auteur + "\n catégorie : " + categorie + "\n nationalité : " + nationalite + "\n référence : " + reference + "\n description : " + description + "\n nbDisponible : " + nbDisponible + "\n nbReserve : " + nbReserve + "\n nbTotal : " + nbTotal;
     }
 
   public boolean equals(Ressource r){

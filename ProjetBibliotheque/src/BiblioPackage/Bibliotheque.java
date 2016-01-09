@@ -838,7 +838,7 @@ public class Bibliotheque {
                     System.out.println(i + ") " + reserv.toString());
                 }
             }
-            System.out.print("Choisi reservation à annuler (1-" + i + "):");
+            System.out.print("Choisir la réservation à annuler (1-" + i + "):");
             int e = Lire.choix(i);
             this.res.remove(rese.get(e - 1));
             for (Ressource ress : this.doc) {
@@ -846,7 +846,7 @@ public class Bibliotheque {
                     ress.setNbReserve(ress.getNbReserve() - 1);
                 }
             }
-            System.out.println("Reservation: " + rese.get(e - 1).toString() + "\n annullée.");
+            System.out.println("Réservation: " + rese.get(e - 1).toString() + "\n annullée.");
         }
     }
 
@@ -946,6 +946,7 @@ public class Bibliotheque {
                         } else {
                             r.get(e - 1).getRessource().setNbDisponible(r.get(e - 1).getRessource().getNbDisponible() - 1);
                             ad.addEmprunte(new Emprunt(r.get(e - 1).getRessource(), ad));
+                            System.out.println(r.get(e - 1).getRessource().getTitre() + " emprunté.");
                             if (resDelete != null) {
                                 this.res.remove(resDelete);
                                 r.get(e - 1).getRessource().setNbReserve(r.get(e - 1).getRessource().getNbReserve() - 1);
@@ -1005,6 +1006,7 @@ public class Bibliotheque {
                     } else {
                         ress.setNbDisponible(ress.getNbDisponible() - 1);
                         ad.addEmprunte(new Emprunt(ress, ad));
+                        System.out.println(ress.getTitre() + " emprunté.");
                         if (resDelete != null) {
                             this.res.remove(resDelete);
                             ress.setNbReserve(ress.getNbReserve() - 1);
@@ -1070,15 +1072,15 @@ public class Bibliotheque {
                             System.out.println("Ressource: " + tit + "pas trouvée.");
                         }
                     } else {
-                        System.out.println("Rien a rendre.");
+                        System.out.println("Rien à rendre.");
                     }
                     break;
                 case 2:
                     int nombre = ad.afficherEmprunte();
                     if (nombre == 0) {
-                        System.out.println("Rien a rendre.");
+                        System.out.println("Rien à rendre.");
                     } else {
-                        System.out.println("Choisi ressource a rendre 1-" + nombre + ": \n");
+                        System.out.println("Choisi ressource à rendre 1-" + nombre + ": \n");
                         i = Lire.choix(nombre) - 1;
                         System.out.println("Vous voulez rendre: \n" + ad.getEmprunteList().get(i).toString() + "\n ? (y/n)");
                         String choix = Lire.S();
