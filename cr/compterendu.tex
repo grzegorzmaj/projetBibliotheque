@@ -77,6 +77,15 @@
     \tableofcontents
     \newpage
     
+    \section{Introduction}
+    
+    L'objectif de ce projet est de creer un programme afin informatiser le système d'information d'une
+    mediatheque. Celui-ci offrira aux adherents des nouveaux services comme par exemple de reserver,
+    d'emprunter via le logiciel. Nous avons du utilise la programmation oriente objet avec comme langage 
+    le Java.
+    
+     
+    
      \section{La conception}
      
 	     \subsection{Diagramme de classes}
@@ -98,15 +107,16 @@
 		\end{figure}
 	
 	\section{Implémentation}
-	Le logiciel est implémente dans la langue Java. Pour lire le commandes d'utilisateur on a utilise 
+	Le logiciel est implémente dans la langage Java. Pour lire les commandes d'utilisateur on a utilise 
 	la classe \texttt{Lire}.
 	
-	Le projet de mediatheque nécessite utiliser base de données ou enregistrer le données dans le fichier.
+	Le projet de mediatheque nécessite d'utiliser une base de données ou d'enregistrer les données dans le 
+	fichier.
 	On a considéré utilisation format XML ou JSON. On a choisi de JSON, parce que c'est plus léger et 
 	simple que XML. Comme un parser on a choisi JSON.simple.
 	
 	Faire les emprunts et les réservations a besoin d'utiliser certain format de la date. On a utiliser 
-	JodaTime qui est nouveau standard dans Java 8.
+	JodaTime.
 	
 	\section{Les tests}
 	Pendant les tests on a dû vérifier:
@@ -115,6 +125,10 @@
 		\item supprimer adhérent
 		\item ajouter bibliothécaire
 		\item supprimer bibliothécaire
+		\item afficher adhérent
+		\item afficher ressource
+		\item ajouter ressource
+		\item supprimer ressource`
 		\item emprunter
 		\begin{itemize}
 			\item limites d'emprunt
@@ -147,6 +161,7 @@
 				\item menu pour utilisateur,
 			\end{itemize}
 			\item compte rendu.
+			
 		\end{itemize}
 		
 		
@@ -165,10 +180,23 @@
 			\item compte rendu.
 		\end{itemize}
 		
+		Nous avons aussi chacun lit la partie de code créer par l'autre et corrige si besoin était.
 		
-		\subsection{Logiciel de gestion de version}
-		Pendant le travail on a gardé tous les fichier sur na serveur GitHub avec utilisation du système 
-		Git.
+		
+		
+		
+		\subsection{Logiciels utilises}
+		Nous avons utilise Netbeans pour implémenter le programme, car c'est un logiciel très complet par 
+		rapport a Geany.
+
+		Pour les diagrammes de classes et d'utilisation, nous avons utilise Umbrello qui est un logiciel 	
+		très simple a utiliser.
+		
+		Pendant le travail on a gardé tous les fichier sur un serveur GitHub avec utilisation du système 
+		Git. Cela nous permet de travailler en même temps sur un même fichier sans avoir de conflits entre 
+		les fichiers. Il nous permet aussi de créer différentes branches pour différentes options est 
+		ensuite de choisir la meilleur. Nous avons utilise le serveur GitHub car il est gratuit, mais en 
+		contrepartie tout le monde peut voir notre projet.
 		
 		Tout le projet est disponible sous l'adresse
 		\url{https://github.com/grzegorzmaj/projetBibliotheque}.

@@ -430,7 +430,7 @@ public class Bibliotheque {
         String p = Lire.S();
         ArrayList<Adherent> ad = this.chercherAdherent(n, p);
         String c = "o";
-        if (ad.size() != 0) {
+        if (!ad.isEmpty()) {
             for (Adherent adh1 : ad) {
                 System.out.println("Voici la liste des adherents ayant le meme nom :");
                 System.out.println(adh1.toString() + "\nDate de naissance: " + adh1.getDateNaissance() + "\nAdresse: " + adh1.getAdresse() + "\nMail: " + adh1.getMail());
