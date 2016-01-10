@@ -953,6 +953,15 @@ public class Bibliotheque {
                                 this.res.remove(resDelete);
                                 r.get(e - 1).getRessource().setNbReserve(r.get(e - 1).getRessource().getNbReserve() - 1);
                             }
+                            if (r.get(e - 1).getRessource() instanceof Livre) {
+                                ad.setNbLivre(ad.getNbLivre()+1);
+                            } else if (r.get(e - 1).getRessource() instanceof Revue) {
+                                ad.setNbRevue(ad.getNbRevue()+1);
+                            } else if (r.get(e - 1).getRessource() instanceof CD) {
+                                ad.setNbCd(ad.getNbCd()+1);
+                            } else if (r.get(e - 1).getRessource() instanceof DVD) {
+                                ad.setNbDVD(ad.getNbDVD()+1);
+                            }
                             return true;
                         }
                     } else {
@@ -1012,6 +1021,15 @@ public class Bibliotheque {
                         if (resDelete != null) {
                             this.res.remove(resDelete);
                             ress.setNbReserve(ress.getNbReserve() - 1);
+                        }
+                        if (ress instanceof Livre) {
+                            ad.setNbLivre(ad.getNbLivre() + 1);
+                        } else if (ress instanceof Revue) {
+                            ad.setNbRevue(ad.getNbRevue() + 1);
+                        } else if (ress instanceof CD) {
+                            ad.setNbCd(ad.getNbCd() + 1);
+                        } else if (ress instanceof DVD) {
+                            ad.setNbDVD(ad.getNbDVD() + 1);
                         }
                         return true;
                     }
@@ -1091,7 +1109,17 @@ public class Bibliotheque {
                                 case "y":
                                     String t = ad.getEmprunteList().get(i).getTitre();
                                     int nb = this.chercherRessource(ad.getEmprunteList().get(i).getReference()).getNbDisponible();
-                                    this.chercherRessource(ad.getEmprunteList().get(i).getReference()).setNbDisponible(nb + 1);
+                                    Ressource ress = this.chercherRessource(ad.getEmprunteList().get(i).getReference());
+                                    ress.setNbDisponible(nb + 1);
+                                    if (ress instanceof Livre) {
+                                        ad.setNbLivre(ad.getNbLivre() - 1);
+                                    } else if (ress instanceof Revue) {
+                                        ad.setNbRevue(ad.getNbRevue() - 1);
+                                    } else if (ress instanceof CD) {
+                                        ad.setNbCd(ad.getNbCd() - 1);
+                                    } else if (ress instanceof DVD) {
+                                        ad.setNbDVD(ad.getNbDVD() - 1);
+                                    }
                                     ad.removeEmprunte(ad.getEmprunteList().get(i));
                                     System.out.println("Ressource:\n '" + t + "' rendue");
                                     choix = "n";
@@ -1109,6 +1137,14 @@ public class Bibliotheque {
             }
         }
 
+    }
+    
+    public void afficherLimites(Adherent ad){
+        System.out.println("Nombre livres empruntes/nombre maximale:" + ad.getNbLivre() + "/" + this.max_livre);
+        System.out.println("Nombre revues empruntes/nombre maximale:" + ad.getNbRevue() + "/" + this.max_revue);
+        System.out.println("Nombre cd empruntes/nombre maximale:" + ad.getNbCd() + "/" + this.max_cd);
+        System.out.println("Nombre dvd empruntes/nombre maximale:" + ad.getNbDVD() + "/" + this.max_dvd);
+        System.out.println("Nombre ressources reserves/nombre maximale:" + ad.getNbReserve() + "/" + this.max_reserve);
     }
 
 }

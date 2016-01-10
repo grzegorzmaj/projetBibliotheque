@@ -52,8 +52,8 @@ public class Main {
 
     public static void menuRechercher(Bibliotheque b) {
         ArrayList<Resultat> r = new ArrayList();
-        String e="o";
-        while(e.equalsIgnoreCase("o")){
+        String e = "o";
+        while (e.equalsIgnoreCase("o")) {
             System.out.println("Voulez-vous chercher avec : ");
             System.out.println("    1) des mots clés");
             System.out.println("    2) des critères ");
@@ -72,7 +72,7 @@ public class Main {
             }
             afficherResultat(r);
             System.out.println("Voulez- vous faire une nouvelle recherche (o/n) :");
-            e=Lire.S();
+            e = Lire.S();
         }
     }
 
@@ -102,10 +102,9 @@ public class Main {
         if (!r.isEmpty()) {
             System.out.println("    1) emprunter");
             System.out.println("    2) reserver ");
-            minChoix=1;
-        }
-        else{
-            minChoix=3;
+            minChoix = 1;
+        } else {
+            minChoix = 3;
         }
         System.out.println("    3) faire une nouvelle recherche");
         System.out.println("    4) revenir au menu principal");
@@ -127,7 +126,7 @@ public class Main {
                 break;
             case 4:
                 break;
-            }
+        }
 
     }
 
@@ -148,7 +147,7 @@ public class Main {
     }
 
     public static void connecterAdh(Bibliotheque b) {
-        
+
         System.out.println("Veuillez entrer votre numéro de carte :");
         int num = Lire.i();
         System.out.println("Veuillez entrer votre mot de passe :");
@@ -168,7 +167,7 @@ public class Main {
     }
 
     public static void connecterBib(Bibliotheque b) {
-        
+
         System.out.println("Veuillez entrer votre numéro de carte :");
         int num = Lire.i();
         System.out.println("Veuillez entrer votre mot de passe :");
@@ -188,7 +187,7 @@ public class Main {
 
     public static void menuAdh(Bibliotheque b, Adherent adh) {
         int c = 0;
-        while (c != 9) {
+        while (c != 10) {
             System.out.println("    1) Chercher des ressources");
             System.out.println("    2) Afficher les ressources empruntées");
             System.out.println("    3) Afficher les ressources réservées");
@@ -197,8 +196,9 @@ public class Main {
             System.out.println("    6) Afficher les ressources");
             System.out.println("    7) Rendre des ressources");
             System.out.println("    8) Annuler des reservations");
-            System.out.println("    9) Se déconnecter");
-            c = Lire.choix(9);
+            System.out.println("    9) Afficher mes limites");
+            System.out.println("    10) Se déconnecter");
+            c = Lire.choix(10);
 
             switch (c) {
                 case 1:
@@ -224,6 +224,9 @@ public class Main {
                     break;
                 case 8:
                     b.annulerReservation(adh);
+                    break;
+                case 9:
+                    b.afficherLimites(adh);
                     break;
             }
         }
