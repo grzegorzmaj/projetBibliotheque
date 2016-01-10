@@ -13,6 +13,8 @@ public class Main {
         Bibliotheque b = new Bibliotheque("b");
         System.out.println("Reading configuration files...");
         b.debutTravail();//lit les fichiers
+        System.out.println("Bibliothécaire par défaut num: 1 mdp: password");
+        System.out.println("Adhérent par défaut num: 3 mdp: 1234");
         menu(b);
         try {
             b.finTravail();//ecrit les fichiers
